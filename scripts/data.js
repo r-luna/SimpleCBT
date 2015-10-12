@@ -6,18 +6,19 @@ var data = {
         {
             slidetype:      'content',
             title:          'title of slide',
-            text:           'slide text goes here'
+            text:           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         },
         {
             slidetype:      'truefalse',
             title:          'title of slide',
+            text:           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
             answer:         true
         },
         {
             slidetype:      'multi',
             title:          'title of slide',
             subtitle:       'subtitle of slide',
-            question:       'question text here',
+            question:       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
             answers: [
                 {
                     answertext: 'answer 1 text here',
@@ -40,11 +41,12 @@ var data = {
         {
             slidetype:      'truefalse',
             title:          'is the sky blue?',
+            text:           'question text here',
             answer:         true
         },
         {
             slidetype:      'multi',
-            title:          'Eating Lumch',
+            title:          'Eating Lunch',
             subtitle:       'Scenario 1',
             question:       'Which one of these places serves hamburgers?',
             answers: [

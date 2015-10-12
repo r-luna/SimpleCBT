@@ -7,7 +7,7 @@
  */
 ;(function(ns,$){
     /* js:option explicit*/
-    /* global palcare, window, jQuery, document, $, ll */
+    /* global palcare, jQuery */
 
     // PRIVATE
 
@@ -83,9 +83,8 @@
             e.preventDefault();
             return;
         }
-e.stopPropagation();
+
 		var cbs = _subscriptions[e.type];
-        console.log(_subscriptions);
 		for (var i=0;i<cbs.length;i++){
             cbs[i](e);
 		}
@@ -127,7 +126,7 @@ e.stopPropagation();
 
 
 	/**
-	 *
+     * Advances the cbt to the next slide
 	 * @type {Function}
      * @name palcare.controller.doSpecialPartsAccept
 	 * @param {Object} e - the event object
@@ -138,8 +137,41 @@ e.stopPropagation();
 		if ($(e.target).data('action') !== 'doNextSlide'){
             return;
         }
-        console.log('clicked');
+        ns.setIsViewRendered(false);
+        palcare.model.setNextSlide();
+        palcare.view.loadSlide();
     };
 
+	/**
+	 * Move the cbt back to the previous slide
+	 * @type {Function}
+     * @name palcare.controller.doPreviousSlide
+	 * @param {Object} e - the event object
+	 * @return {} Returns nothing
+	 * @see palcare.init()
+	 */
+    ns.doPreviousSlide = function(e){
+		if ($(e.target).data('action') !== 'doPreviousSlide'){
+            return;
+        }
+        ns.setIsViewRendered(false);
+        palcare.model.setPreviousSlide();
+        palcare.view.loadSlide();
+    };
 
+	/**
+	 * Move the cbt back to the previous slide
+	 * @type {Function}
+     * @name palcare.controller.doPreviousSlide
+	 * @param {Object} e - the event object
+	 * @return {} Returns nothing
+	 * @see palcare.init()
+	 */
+    ns.doCheckStatement = function(e){
+		if ($(e.target).data('action') !== 'doCheckStatement'){
+            return;
+        }
+        console.log($(e.target).data('value'));
+    };
+    
 })(this.palcare.controller = this.palcare.controller  || {}, jQuery);

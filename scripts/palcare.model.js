@@ -7,7 +7,7 @@
  */
 ;(function(ns,$){
     /* js:option explicit*/
-    /* global audi, window, jQuery, document */
+    /* global window, jQuery, palcare */
 
     // PRIVATE
     
@@ -22,6 +22,42 @@
     
     // PUBLIC
 
+    /**
+	 * Returns the current slide number.
+	 * @method
+	 * @type {Function}
+	 * @name palcare.model.getCurrentSlide()
+	 * @param {Number} num - the number of the current slide
+	 * @return {} Returns nothing
+	 */
+    ns.getCurrentSlide = function(){
+        return _currentSlide;   
+    };
+    
+    /**
+	 * Sets the current slide number.
+	 * @method
+	 * @type {Function}
+	 * @name palcare.model.setNextSlide()
+	 * @param {} 
+	 * @return {} Returns nothing
+	 */
+    ns.setNextSlide = function(){
+        _currentSlide++;  
+    };
+    
+    /**
+	 * Sets the current slide to the previous number.
+	 * @method
+	 * @type {Function}
+	 * @name palcare.model.setNextSlide()
+	 * @param {} 
+	 * @return {} Returns nothing
+	 */
+    ns.setPreviousSlide = function(){
+        _currentSlide--;  
+    };
+    
     /**
 	 * Caches the template files.
 	 * @method
@@ -62,18 +98,6 @@
             }
         }
         palcare.view.loadSlide();
-    };
-    
-    /**
-	 * Loads the content for the app.
-	 * @method
-	 * @type {Function}
-	 * @name palcare.model.getCurrentSlide()
-	 * @param {}
-	 * @return {} Returns nothing
-	 */
-    ns.getCurrentSlide = function(){
-        return _currentSlide;
     };
 
     /**

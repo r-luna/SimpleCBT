@@ -7,7 +7,7 @@
  */
 ;(function(ns,$){
     /* js:option explicit*/
-    /* global window, jQuery, document */
+    /* global jQuery, document */
 
     // PUBLIC
 
@@ -25,6 +25,8 @@
 
         // create subscriptions
         palcare.controller.subscribe('mouseup',palcare.controller.doNextSlide);
+        palcare.controller.subscribe('mouseup',palcare.controller.doPreviousSlide);
+        palcare.controller.subscribe('mouseup',palcare.controller.doCheckStatement);
         //palcare.controller.subscribe('mousedown',palcare.controller.changeButtonState);
 
         //palcare.controller.subscribe('keydown',palcare.controller.doKeyEvents);
