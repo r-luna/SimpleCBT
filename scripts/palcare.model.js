@@ -32,16 +32,16 @@
 	 */
     ns.loadTemplates = function(){
         $.get('templates/content_tpl.html', function(template){
-            _templates.content = $($.parseHTML(template)).find('#interactive').html();
+            _templates.content = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
         $.get('templates/modal_tpl.html', function(template){
-            _templates.modal = $($.parseHTML(template)).find('#interactive').html();
+            _templates.modal = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
         $.get('templates/multiple_choice_tpl.html', function(template){
-            _templates.multi = $($.parseHTML(template)).find('#interactive').html();
+            _templates.multi = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
         $.get('templates/true_false_tpl.html', function(template){
-            _templates.truefalse = $($.parseHTML(template)).find('#interactive').html();
+            _templates.truefalse = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
     };
     

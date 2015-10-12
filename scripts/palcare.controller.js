@@ -83,57 +83,14 @@
             e.preventDefault();
             return;
         }
-
+e.stopPropagation();
 		var cbs = _subscriptions[e.type];
+        console.log(_subscriptions);
 		for (var i=0;i<cbs.length;i++){
             cbs[i](e);
 		}
 
 	};
-
-	/**
-	 * This notifies the hashchange event subscribers.
-	 * @type {Function}
-     * @name palcare.controller.notifyHashChange
-	 * @param {Object} e - the event object
-	 * @return {} Returns nothing
-	 * @see palcare.init()
-	 */
-    ns.notifyHashChange = function(e){
-        var cbs = _subscriptions[e.type];
-		for (var i=0;i<cbs.length;i++){
-			cbs[i](_events.slice(-1)[0]);
-		}
-    };
-
-	/**
-	 * Changes the location hash which will trigger the hashchange event which itself triggers the appropriate view update.
-	 * @example
-     *      &lt;div id="someButton" data-action="updateHash" data-hash="defaultView"&gt;&lt;/div&gt;
-	 * @type {Function}
-     * @name palcare.controller.triggerViewChange
-	 * @param {Object} e - the event object
-	 * @return {} Returns nothing
-	 * @see palcare.init()
-	 */
-    ns.triggerViewChange = function(e){
-		if ($(e.target).data('action') !== 'updateHash'){
-			return;
-		}
-        function updateHash(){
-            ns.updateViewRenderState(false);
-            palcare.util.destroy_iScroll();
-            _events.push(e);
-            window.location.hash = $(e.target).data('hash');
-        }
-        if ($(e.target).hasClass('btn') || $(e.target).hasClass('radioWrapper')){ // if triggered by a button or radio
-            if (!$(e.target).hasClass('btn_disabled') && !$(e.target).hasClass('radio_disabled')){
-                updateHash();
-            }
-        } else {
-            updateHash();
-        }
-    };
 
 	/**
 	 * Handles touchstart / mousedown events for btn elements.
@@ -177,10 +134,10 @@
 	 * @return {} Returns nothing
 	 * @see palcare.init()
 	 */
-    ns.doBtnSelect = function(e){
-		//if ($(e.target).data('action') !== 'doSpecialPartsAccept'){
-        //    return;
-        //}
+    ns.doNextSlide = function(e){
+		if ($(e.target).data('action') !== 'doNextSlide'){
+            return;
+        }
         console.log('clicked');
     };
 

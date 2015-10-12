@@ -139,7 +139,9 @@ body {
     height: 54px;
     width: 310px;
 }
-
+.btn {
+    cursor: pointer;
+}
 #leftBtn {
     background: url(../images/btn_left.png);
     height: 54px;
@@ -255,7 +257,6 @@ body {
     width: 383px;
     height: 112px;
     background-repeat: no-repeat;
-    cursor: pointer;
     padding: 0px 0px 0px 87px;
     vertical-align: middle;
     float: left;

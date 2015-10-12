@@ -7,7 +7,7 @@
  */
 ;(function(ns,$){
     /* js:option explicit*/
-    /* global window, jQuery, document */
+    /* global window, jQuery, document, palcare */
 
     function _drawBooleanSlide(o){
         var tpl = palcare.model.getTemplate('truefalse');
@@ -19,7 +19,10 @@
     
     function _drawContentSlide(o){
         var tpl = palcare.model.getTemplate('content');
-        
+        tpl.find('#topHeaderWrapper').html(o.title);
+        tpl.find('#textBox').html(o.text);
+        $('#interactive').html(tpl.html());
+        palcare.controller.setIsViewRendered(true);
     }
     
     
