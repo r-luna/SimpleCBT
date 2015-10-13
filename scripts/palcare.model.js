@@ -55,7 +55,7 @@
 	 * @return {} Returns nothing
 	 */
     ns.setPreviousSlide = function(){
-        _currentSlide--;  
+        _currentSlide--;
     };
     
     /**

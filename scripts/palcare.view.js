@@ -50,9 +50,7 @@
 	 * @return {} Returns nothing
 	 */
     ns.loadSlide = function(){
-        var currentSlide = palcare.model.getCurrentSlide();
-        var slide = data.slides[currentSlide];
-        
+        var slide = data.slides[palcare.model.getCurrentSlide()];
         if (slide.slidetype === 'truefalse'){ // check to see if the slide is a "true / false" slide
             _renderTrueFalseSlide(slide);
         } else if (slide.slidetype === 'multi'){ // chekc to see if the slide is a multiple choice slide
