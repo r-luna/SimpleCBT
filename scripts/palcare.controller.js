@@ -26,7 +26,7 @@
     // PUBLIC
 
 	/**
-	 * Sets the value for "_isViewRendered"" - helps prevent click spamming of ui elements when views are being loaded;
+	 * Sets the value for "_isViewRendered - helps prevent click spamming of ui elements when views are being loaded;
 	 * @type {Function}
      * @name palcare.controller.setIsViewRendered
 	 * @param {String} eType - the event type
@@ -54,6 +54,20 @@
 		_subscriptions[eType].push(cb);
 	};
 
+	/**
+	 * Removes subscribers from the _subscriptions array.
+	 * @type {Function}
+     * @name palcare.controller.unsubscribe
+	 * @param {String} eType - the event type
+	 * @param {Object} cb - the function reference
+	 * @return {} Returns nothing
+	 * @see palcare.init()
+	 */
+    ns.unsubscribe = function(){
+        console.log('palcar.controller.unsibscrobe');
+    };
+    
+    
 	/**
 	 * This notifies the event subscribers (hashchange has a separate publisher). When an event fires all subscribers to the event are notified. The subscribers
      * inspect the event target to see if the event is something that they are expected to act upon.
@@ -134,7 +148,7 @@
 	 */
     ns.doNextSlide = function(e){
         var currentSlide = palcare.model.getCurrentSlide();
-        var slidesLen = data.slides.length;
+        var slidesLen = palcare.model.getData().slides.slide.length;
 		if ($(e.target).data('action') !== 'doNextSlide' || currentSlide + 1 === slidesLen){
             return;
         }
@@ -160,21 +174,20 @@
         palcare.model.setPreviousSlide();
         palcare.view.loadSlide();
     };
-
+    
 	/**
-	 * Move the cbt back to the previous slide
+	 * Handles the user's answer by handing the event to the slide object's "answer" method.
 	 * @type {Function}
-     * @name palcare.controller.doPreviousSlide
+     * @name palcare.controller.doQuestionBtn()
 	 * @param {Object} e - the event object
 	 * @return {} Returns nothing
 	 * @see palcare.init()
 	 */
-    ns.doCheckStatement = function(e){
-		if ($(e.target).data('action') !== 'doCheckStatement'){
+    ns.doQuestionBtn = function(e){
+        if ($(e.target).data('action') !== 'doQuestionBtn'){
             return;
         }
-        console.log($(e.target).data('value'));
-        palcare.model.checkSlideForTruthfulness();
+        palcare.view.sendAnswer(e);
     };
     
 })(this.palcare.controller = this.palcare.controller  || {}, jQuery);

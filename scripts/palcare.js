@@ -26,7 +26,7 @@
         // create subscriptions
         palcare.controller.subscribe('mouseup',palcare.controller.doNextSlide);
         palcare.controller.subscribe('mouseup',palcare.controller.doPreviousSlide);
-        palcare.controller.subscribe('mouseup',palcare.controller.doCheckStatement);
+        palcare.controller.subscribe('mouseup',palcare.controller.doQuestionBtn);
         //palcare.controller.subscribe('mousedown',palcare.controller.changeButtonState);
 
         //palcare.controller.subscribe('keydown',palcare.controller.doKeyEvents);
@@ -36,8 +36,14 @@
         //$('body').on('mousedown','.btn',palcare.controller.notify);
         //$('body').on('keydown','input',palcare.controller.notify);
 
+        $.ajaxSetup({error:
+            function(xhr, status, error){
+                console.log('?',status,error);
+            }
+        });
 
         palcare.model.loadTemplates();
+        palcare.model.loadData();
         palcare.model.checkForCompleteLoad();
     };
     

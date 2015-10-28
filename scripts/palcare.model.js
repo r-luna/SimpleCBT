@@ -16,12 +16,65 @@
     var _templates = {
         content:null,
         multi:null,
-        truefalse:null,
-        modal:null
+        boolean:null,
+        modal:null,
+        endscreen: null
     };
+    
+    var _data = null;
+    
+    var _scores = {};
     
     // PUBLIC
 
+    /**
+	 * Keeps track of the user's score.
+	 * @method
+	 * @type {Function}
+	 * @name palcare.model.setScore()
+	 * @param {Number} slidendx - the number of the current slide
+     * @param {String} answer - the selected answer,values can be boolan or multiplechoice (a, b, c, d)
+     * @param {Boolean} iscorrect - is the answer correct
+	 * @return {} Returns nothing
+	 */    
+    ns.setScore = function(iscorrect,answerndx){
+        _scores['slide' + _currentSlide] = {slidendx: _currentSlide, iscorrect:iscorrect,answerndx:answerndx};
+        console.log(_scores);
+    };
+    
+    /**
+	 * Keeps track of the user's score.
+	 * @method
+	 * @type {Function}
+	 * @name palcare.model.setScore()
+	 * @param {Number} slidendx - the number of the current slide
+	 * @return {} Returns nothing
+	 */    
+    ns.getSpecificScore = function(ndx){
+        return _scores['slide'+ndx];  
+    };
+    
+    /**
+	 * Loads the coontent data.
+	 * @method
+	 * @type {Function}
+	 * @name palcare.model.loadData()
+	 * @param {Number} num - the number of the current slide
+	 * @return {} Returns nothing
+	 */
+    ns.loadData = function(){
+        $.ajax({
+            type: 'GET',
+            url: 'scripts/data.xml',
+            cache: false,
+            dataType: 'text',
+            success: function(responseData,status,xhr){
+                var xobj = new X2JS();
+                _data = xobj.xml_str2json(responseData).data;
+            }
+        });
+    };
+    
     /**
 	 * Returns the current slide number.
 	 * @method
@@ -32,6 +85,18 @@
 	 */
     ns.getCurrentSlide = function(){
         return _currentSlide;   
+    };
+    
+    /**
+	 * Returns content data.
+	 * @method
+	 * @type {Function}
+	 * @name palcare.model.getData()
+	 * @param {Number} num - the number of the current slide
+	 * @return {} Returns nothing
+	 */
+    ns.getData = function(){
+        return _data;  
     };
     
     /**
@@ -76,13 +141,16 @@
         $.get('templates/multiple_choice_tpl.html', function(template){
             _templates.multi = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
-        $.get('templates/true_false_tpl.html', function(template){
-            _templates.truefalse = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
+        $.get('templates/boolean_tpl.html', function(template){
+            _templates.boolean = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
+        });
+        $.get('templates/end_screen_tpl.html', function(template){
+            _templates.endscreen = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
     };
     
     /**
-	 * Setinterval that checks all properties of the _templates object to ensure that all templates have been loaded
+	 * Recursive function that checks all properties of the _templates object to ensure that all templates have been loaded
 	 * @method
 	 * @type {Function}
 	 * @name palcare.model.loadTemplates()
@@ -90,12 +158,19 @@
 	 * @return {} Returns nothing
 	 */
     ns.checkForCompleteLoad = function(){
+        var loaded = true;
         for (p in _templates){
             if (!_templates[p]){
-                console.log('loading...');
-                window.setTimeout(palcare.model.checkForCompleteLoad,200);
-                return;
+                loaded = false;
             }
+        }
+        if (_data === null){
+            loaded = false;
+        }
+        if (!loaded){
+            console.log('loading...');
+            window.setTimeout(palcare.model.checkForCompleteLoad,200);
+            return;
         }
         palcare.view.loadSlide();
     };
