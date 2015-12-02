@@ -159,7 +159,7 @@
 	 */
     ns.checkForCompleteLoad = function(){
         var loaded = true;
-        for (p in _templates){
+        for (var p in _templates){
             if (!_templates[p]){
                 loaded = false;
             }

@@ -7,7 +7,7 @@
  */
 ;(function(ns,$){
     /* js:option explicit*/
-    /* global jQuery, palcare, data, window */
+    /* global jQuery, palcare, window */
 
     var _currentSlideObj;
     var _globalContentFadeInterval = 500; // ms

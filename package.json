@@ -1,0 +1,27 @@
+{
+  "name": "scorm_cbt",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/r-luna/SimpleCBT"
+  },
+  "author": "Rick Luna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r-luna/SimpleCBT/issues"
+  },
+  "homepage": "https://github.com/r-luna/SimpleCBT",
+  "devDependencies": {
+    "gulp": "~3.9.0",
+    "gulp-useref": "~3.0.3",
+    "merge-stream": "~1.0.0"
+  }
+}

@@ -1,0 +1,379 @@
+
+
+@font-face {
+  font-family: 'FranklinGothicMedium';
+  src: url('../fonts/FranklinGothic-Medium.eot?#iefix') format('embedded-opentype'),  
+       url('../fonts/FranklinGothic-Medium.woff') format('woff'), 
+       url('../fonts/FranklinGothic-Medium.ttf')  format('truetype'), 
+       url('../fonts/FranklinGothic-Medium.svg#FranklinGothic-Medium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FranklinGothicBook';
+  src: url('../fonts/FranklinGothic-Book.eot?#iefix') format('embedded-opentype'),  
+       url('../fonts/FranklinGothic-Book.woff') format('woff'), 
+       url('../fonts/FranklinGothic-Book.ttf')  format('truetype'), 
+       url('../fonts/FranklinGothic-Book.svg#FranklinGothic-Book') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'FranklinGothicDemi';
+  src: url('../fonts/FranklinGothic-Demi.eot?#iefix') format('embedded-opentype'),
+      url('../fonts/FranklinGothic-Demi.woff') format('woff'),
+      url('../fonts/FranklinGothic-Demi.ttf')  format('truetype'),
+      url('../fonts/FranklinGothic-Demi.svg#FranklinGothic-Demi') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CalistoMT';
+  src: url('../fonts/CalistoMT.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/CalistoMT.woff') format('woff'),
+       url('../fonts/CalistoMT.ttf')  format('truetype'),
+       url('../fonts/CalistoMT.svg#CalistoMT') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-backface-visibility: hidden;
+    margin: 0px;
+    padding: 0px;
+    outline: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html{
+    overflow: hidden;
+    height:100%; /* needed to allow flex boxes to assume the correct height */
+    position:fixed; /* fix the view */
+    top:0px; /* now set its location */
+    left:0px; /* .. */
+    width:100%; /* set its width */
+}
+body {
+    -webkit-touch-callout: none;    /* prevent callout to copy image, etc when tap to hold */
+    -webkit-user-select: none;      /* prevent copy paste, to allow, change 'none' to 'text' */
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -ms-touch-action: manipulation; /* prevent 300ms delay on touch start events */
+    touch-action: none; 			/* prevent 300ms delay on touch start events */
+    background-color:#ffffff;
+    background-attachment:fixed;
+    font-family: AudiNormal;
+    font-size:13px;
+    height:100%;
+    width:100%;
+    margin:0px;
+    padding:0px;
+    overflow: hidden;
+    font-family: FranklinGothicBook;
+    background-color: #e4e4e4;
+}
+
+#topBlueBar {
+    position: absolute;
+    z-index:1;
+    background-color: #425968;
+    height: 13px;
+    left: 0px;
+    top: 14px;
+    width: 988px;
+}
+#logo {
+    background: url(../images/iuh-logo.png);
+    height: 35px;
+    width: 168px;
+    position:absolute;
+    top: 60px;
+    left: 85px;
+}
+
+
+#topHeaderWrapper {
+    width: 100%;
+    height: 100px;
+    font-size: 30.02px;
+    text-align: center;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#textBox {
+    position: relative;
+    top: 0px;
+    width: 789px;
+    left: 30px;
+    height: 230px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 3px 0.00px rgba(0, 0, 0, 0.2);
+    padding: 43px 55px 43px 55px;
+    font-size:21px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 500ms ease;
+    opacity: 0;
+}
+
+.fadeIn {
+    opacity: 1 !important;
+}
+
+#controlsWrapper {
+    position:absolute;
+    top: 624px;
+    left: 331px;
+    height: 54px;
+    width: 310px;
+}
+.btn {
+    cursor: pointer;
+}
+#leftBtn {
+    background: url(../images/btn_left.png);
+    height: 54px;
+    width: 54px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#pauseBtn {
+    background: url(../images/btn_pause.png);
+    height:54px;
+    width:54px;
+    position: absolute;
+    top: 0px;
+    left: 130px;
+}
+
+#rightBtn {
+    background: url(../images/btn_right.png);
+    height: 54px;
+    width: 54px;
+    position: absolute;
+    top: 0px;
+    left: 256px;
+}
+
+#interactive {
+    position: absolute;
+    top:137px;
+    left:85px;
+    height: 465px;
+    width: 850px;
+    transition: all 500ms ease;
+    opacity: 0;
+}
+
+#questionTitle {
+    font-family: FranklinGothicBook;
+    color: #434345;
+    height: 45px;
+    font-size: 16.26px;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#textBox2 {
+    width: 100%;
+    height: 280px;
+    font-family: CalistoMT;
+    font-size:30px;
+    color: #981e32;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trueBtn {
+    position:relative;
+    top:0px;
+    left: 0px;
+    width: 383px;
+    height: 112px;
+    background-color:#ffffff;
+    box-shadow: 0px 0px 3px 0.00px rgba(0, 0, 0, 0.2);
+    background: url(../images/btn_true.png);
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.falseBtn {
+    position:relative;
+    top: -112px;
+    left: 467px;
+    width: 383px;
+    height: 112px;
+    background-color:#ffffff;
+    box-shadow: 0px 0px 3px 0.00px rgba(0, 0, 0, 0.2);
+    background: url(../images/btn_false.png);
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+#answerWrapper0 {
+    top: -112px;
+    left:0px;
+    background: url(../images/btn_A.png);
+}
+#answerWrapper1 {
+    top: -224px;
+    left:405px;
+    background: url(../images/btn_B.png);
+}
+#answerWrapper2 {
+    top: -204px;
+    left:0px;
+    background: url(../images/btn_C.png);
+}
+#answerWrapper3 {
+    top: -316px;
+    left: 405px;
+    background: url(../images/btn_D.png);
+}
+.multiBtnShim {
+    height: 112px;
+    width: 1px;
+    vertical-align: middle;
+}
+.multiBtns {
+    position:relative;
+    background-color:#ffffff;
+    box-shadow: 0px 0px 3px 0.00px rgba(0, 0, 0, 0.2);
+    width: 383px;
+    height: 112px;
+    background-repeat: no-repeat;
+    padding: 0px 0px 0px 87px;
+    vertical-align: middle;
+    float: left;
+}
+#questionSubTitle {
+    font-family: FranklinGothicBook;
+    font-size: 16.51px;
+    text-align: center;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+#questionMainTitle {
+    font-family: FranklinGothicBook;
+    font-size:34.02px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    color: #434345;
+    margin: 8px 0px 0px 0px;
+}
+
+#textBox3 {
+    font-family: CalistoMT;
+    font-size: 34.02px;
+    color: #981e32;
+    text-align:center;
+    text-overflow: ellipsis;
+    overflow:hidden;
+    width: 100%;
+    height: 120px;
+    
+}
+
+.multiChoiceText {
+    font-family: FranklinGothicBook;
+    font-size: 14.46px;
+}
+
+#multipleChoiceWrapper {
+    position: absolute;
+    width: 600px;
+    top: 300px;
+    left:0px
+}
+
+#trueFalseWrapper {
+    height: 115px;
+}
+
+#dimmed {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #000;
+    height: 100%;
+    width: 100%;
+    opacity: .7;
+    z-index: 100;
+}
+
+#modalContentBox {
+    background-color: #ffffff;
+    height: 338px;
+    width: 785px;
+    font-family: FranklinGothicBook;
+    font-size: 26px;
+    margin: 57px 0px 0px 0px;
+    overflow: hidden;
+}
+
+#modalWrapper {
+    position:absolute;
+    top: 60px;
+    left: 89px;
+    width: 784px;
+    z-index: 101;
+}
+
+#modalPassFailBox {
+    height: 140px;
+    width: 140px;
+    background-color: #ccc;
+    margin: 0px auto;
+    background: url(../images/icon_correct.png);
+    background-position: -14px -11px
+}
+
+#modalLine {
+    width: 451px;
+    height: 2px;
+    background-color: #dcdcdd;
+    margin: 0px auto;
+}
+
+#modalAnswer {
+    font-family: FranklinGothicBook;
+    font-size:28.98px;
+    margin: 39px 63px 39px 63px;
+}
+
+#modalPraise {
+    font-family: FranklinGothicBook;
+    font-style: italic;
+    font-size:28.98px;
+    margin: 39px 63px 39px 63px;
+}
+
+#modalCorrect {
+    color: #94a545;
+    font: 300 28.98px FranklinGothicMedium;
+}
