@@ -377,3 +377,31 @@ body {
     color: #94a545;
     font: 300 28.98px FranklinGothicMedium;
 }
+
+#bluebar {
+    height: 13px;
+    width: 988px;
+    position:absolute;
+    top: 14px;
+    left: 0px;
+    background-color: #425968;
+}
+
+#testlogo {
+    height: 35px;
+    width: 168px;
+    position: absolute;
+    top: 60px;
+    left: 85px;
+    background: url(../images/deleteme-IUH-logo.png);
+    
+}
+
+.testtext {
+    font-family:FranklinGothic;
+    font-size: 30.02px;
+    position: absolute;
+    top: 137px;
+    left: 140px;
+    letter-spacing: inherit;
+}

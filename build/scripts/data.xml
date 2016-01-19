@@ -1,0 +1,146 @@
+<data>
+    <app>Title of App</app>
+    <slides>
+        <slide slidetype="content" title="title of slide">
+            <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
+            <synchedcontent>
+                <content time="1000">
+                   <![CDATA[
+                    one Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    ]]>
+                </content>
+                <content time="1000">
+                    <![CDATA[
+                    two Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    ]]>
+                </content>
+                <content time="1000">
+                    <![CDATA[
+                    three Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    ]]>
+                </content>
+            </synchedcontent>
+        </slide>
+        
+        <slide slidetype="boolean" title="title of slide" answer="true">
+            <question>
+                <![CDATA[
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                ]]>
+            </question>
+            <responses>
+                <response type="wrong">
+                    <text>
+                        <![CDATA[
+                        That was the wrong answer because of this and that
+                        ]]>
+                    </text>
+                    <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
+                </response>
+                <response type="right">
+                    <text>
+                        <![CDATA[
+                        Thats correct! 
+                        ]]>
+                    </text>
+                    <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
+                </response>
+            </responses>
+        </slide>
+        
+        <slide slidetype="multiplechoice" title="title of slide" subtitle="subtitle of slide">
+            <question>
+                <![CDATA[
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt.
+                ]]>
+            </question>
+            <answers>
+                <answer iscorrect="false">
+                    <![CDATA[
+                    answer 1 text here
+                    ]]>
+                </answer>
+                <answer iscorrect="false">
+                    <![CDATA[
+                    answer 2 text here
+                    ]]>
+                </answer>
+                <answer iscorrect="true">
+                    <![CDATA[
+                    answer 3 text here
+                    ]]>
+                </answer>
+                <answer iscorrect="false">
+                    <![CDATA[
+                    answer 4 text here
+                    ]]>
+                </answer>
+            </answers>
+        </slide>
+                
+        <slide slidetype="boolean" title="No name boolean slide" answer="true">
+            <question>
+                <![CDATA[
+                This is another question.
+                ]]>
+            </question>
+            <responses>
+                <response type="wrong">
+                    <text>
+                        <![CDATA[
+                        That was the wrong answer because of this and that
+                        ]]>
+                    </text>
+                    <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
+                </response>
+                <response type="right">
+                    <text>
+                        <![CDATA[
+                        Thats correct! 
+                        ]]>
+                    </text>
+                    <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
+                </response>
+            </responses>
+        </slide>
+
+        <slide slidetype="multiplechoice" title="Eating Lunch" subtitle="Scenario 1">
+            <question>
+                <![CDATA[
+                Which one of these places serves hamburgers?
+                ]]>
+            </question>
+            <answers>
+                <answer iscorrect="false">
+                    <![CDATA[
+                    Taco Bell
+                    ]]>
+                </answer>
+                <answer iscorrect="true">
+                    <![CDATA[
+                    Hardee's
+                    ]]>
+                </answer>
+                <answer iscorrect="false">
+                    <![CDATA[
+                    Olive Garden
+                    ]]>
+                </answer>
+                <answer iscorrect="false">
+                    <![CDATA[
+                    Tommy Chan's Super Good Big Time A#1 Sushi
+                    ]]>
+                </answer>
+            </answers>
+        </slide>
+    </slides>
+</data>

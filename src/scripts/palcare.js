@@ -5,7 +5,7 @@
  * @description Holds the INIT for the app, sets up everything, such as event subscriptions, event listeners, and renders the desired view.
  * @namespace Holds all functionality
  */
-;(function(ns,$){
+;(function(ns,$){ // d
     /* js:option explicit*/
     /* global jQuery, document */
 
@@ -19,7 +19,7 @@
 	 * @name palcare.init
 	 * @param {}
 	 * @return {} Returns nothing
-	 */
+	 */  
     ns.init = function(){
         document.ontouchmove = function(e) {e.preventDefault();};
 

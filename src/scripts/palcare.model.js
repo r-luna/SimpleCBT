@@ -132,19 +132,19 @@
 	 * @return {} Returns nothing
 	 */
     ns.loadTemplates = function(){
-        $.get('templates/content_tpl.html', function(template){
+        $.get('./templates/content_tpl.html', function(template){
             _templates.content = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
-        $.get('templates/modal_tpl.html', function(template){
+        $.get('./templates/modal_tpl.html', function(template){
             _templates.modal = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
-        $.get('templates/multiple_choice_tpl.html', function(template){
+        $.get('./templates/multiple_choice_tpl.html', function(template){
             _templates.multi = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
-        $.get('templates/boolean_tpl.html', function(template){
+        $.get('./templates/boolean_tpl.html', function(template){
             _templates.boolean = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
-        $.get('templates/end_screen_tpl.html', function(template){
+        $.get('./templates/end_screen_tpl.html', function(template){
             _templates.endscreen = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
     };

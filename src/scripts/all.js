@@ -5,7 +5,7 @@
  * @description Holds the INIT for the app, sets up everything, such as event subscriptions, event listeners, and renders the desired view.
  * @namespace Holds all functionality
  */
-;(function(ns,$){
+;(function(ns,$){ // d
     /* js:option explicit*/
     /* global jQuery, document */
 
@@ -19,7 +19,7 @@
 	 * @name palcare.init
 	 * @param {}
 	 * @return {} Returns nothing
-	 */
+	 */  
     ns.init = function(){
         document.ontouchmove = function(e) {e.preventDefault();};
 
@@ -381,19 +381,19 @@
 	 * @return {} Returns nothing
 	 */
     ns.loadTemplates = function(){
-        $.get('templates/content_tpl.html', function(template){
+        $.get('./templates/content_tpl.html', function(template){
             _templates.content = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
-        $.get('templates/modal_tpl.html', function(template){
+        $.get('./templates/modal_tpl.html', function(template){
             _templates.modal = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
-        $.get('templates/multiple_choice_tpl.html', function(template){
+        $.get('./templates/multiple_choice_tpl.html', function(template){
             _templates.multi = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
-        $.get('templates/boolean_tpl.html', function(template){
+        $.get('./templates/boolean_tpl.html', function(template){
             _templates.boolean = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
-        $.get('templates/end_screen_tpl.html', function(template){
+        $.get('./templates/end_screen_tpl.html', function(template){
             _templates.endscreen = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
     };
@@ -463,7 +463,7 @@
     /* js:option explicit*/
     /* global jQuery, palcare, window */
 
-    var _currentSlideObj;
+    var _currentSlideObj = null;
     var _globalContentFadeInterval = 500; // ms
     
     var _classes = {
@@ -608,7 +608,9 @@
     ns.loadSlide = function(){
         var slide = palcare.model.getData().slides.slide[palcare.model.getCurrentSlide()];
         $('#interactive').removeClass('fadeIn');
-        void 0 !== _currentSlideObj && (_currentSlideObj.unload());
+        if (_currentSlideObj !== null){
+            _currentSlideObj.unload(); 
+        }
         window.setTimeout(function(){
             _currentSlideObj = new _classes[slide._slidetype]();
             _currentSlideObj.init(slide);

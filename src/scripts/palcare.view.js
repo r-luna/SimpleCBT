@@ -9,7 +9,7 @@
     /* js:option explicit*/
     /* global jQuery, palcare, window */
 
-    var _currentSlideObj;
+    var _currentSlideObj = null;
     var _globalContentFadeInterval = 500; // ms
     
     var _classes = {
@@ -154,7 +154,9 @@
     ns.loadSlide = function(){
         var slide = palcare.model.getData().slides.slide[palcare.model.getCurrentSlide()];
         $('#interactive').removeClass('fadeIn');
-        void 0 !== _currentSlideObj && (_currentSlideObj.unload());
+        if (_currentSlideObj !== null){
+            _currentSlideObj.unload(); 
+        }
         window.setTimeout(function(){
             _currentSlideObj = new _classes[slide._slidetype]();
             _currentSlideObj.init(slide);
