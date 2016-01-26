@@ -16,10 +16,8 @@
             content:function(){
                 var that = this;
                 this.contentObj = null;
-                this.pageIndex = 0;
-                this.contentIndex = 0;
+                this.synchedIndex = 0;
                 this.timer = null;
-                this.canFadeContent = true;
                 function subscribeToEvents(){
                     //palcare.controller.subscribe('mouseup',palcare.controller.doNextSlide);
                 }
@@ -27,41 +25,21 @@
             
                 }
                 function hideSynchedContent(){
+                    var slide = that.contentObj.synchedcontent.content[that.synchedIndex];
                     $('#textBox').removeClass('fadeIn');
                     that.timer = window.setTimeout(showSynchedContent,_globalContentFadeInterval);
                 }
                 function showSynchedContent(){
-                    var pageLen = that.contentObj.pages.page.length;
-                    var contentLen = that.contentObj.pages.page[that.pageIndex].content.length;
-                    var slide = null;
-                    if (that.contentIndex < contentLen){
-                        slide = that.contentObj.pages.page[that.pageIndex].content[that.contentIndex];
-                        that.contentIndex++;
-                    } else {
-                        that.pageIndex++;
-                        that.contentIndex = 0;
-                        if (that.pageIndex < pageLen){
-                            showSynchedContent();
-                            return;
-                        } else {
-                            console.log('done, no more pages');
-                            return;
-                        }
-                    }
-                    
-                    $('<li>' + slide.toString() + '</li>').appendTo('#list');
+                    var slide = that.contentObj.synchedcontent.content[that.synchedIndex];
+                    var slideLen = that.contentObj.synchedcontent.content.length;
+                    $('#textBox').html(slide.toString());
                     $('#textBox').addClass('fadeIn');
-                    
-                    window.setTimeout(function(){
-                        $('#list li').last().addClass('fadeIn'); 
-                    },10);
-                    
-                    if (that.pageIndex === pageLen -1 && that.contentIndex === contentLen){
-                       return;
+                    if (that.synchedIndex !== slideLen-1){
+                        that.synchedIndex++;
+                        that.timer = window.setTimeout(hideSynchedContent,parseInt(slide._time));
+                    } else {
+                        console.log('done');
                     }
-                    //that.timer = window.setTimeout(hideSynchedContent,parseInt(slide._time));
-                    that.timer = window.setTimeout(showSynchedContent,parseInt(slide._time));
-
                 }
                 function renderContentSlide(){
                     var tpl = palcare.model.getTemplate('content');
@@ -73,7 +51,7 @@
                     window.clearTimeout(that.timer);
                 };
                 this.resume = function(){
-                    var slide = that.contentObj.pages.content[that.pageIndex];
+                    var slide = that.contentObj.synchedcontent.content[that.synchedIndex];
                     that.timer = window.setTimeout(hideSynchedContent,slide._time);
                 };
                 this.unload = function(){
@@ -81,9 +59,9 @@
                     that.timer = null;
                 };
                 this.init = function(content){
-                    that.contentObj = content; // that.contentObj.pages.page[]
-                    console.log(content);
-                    var slide = that.contentObj.pages.page[that.pageIndex].content[that.contentIndex];
+                    that.contentObj = content;
+                    console.log(content); 
+                    var slide = that.contentObj.synchedcontent.content[that.synchedIndex];
                     $('#interactive').addClass('fadeIn');
                     renderContentSlide();
                     

@@ -514,6 +514,7 @@
                 };
                 this.init = function(content){
                     that.contentObj = content;
+                    console.log(content); 
                     var slide = that.contentObj.synchedcontent.content[that.synchedIndex];
                     $('#interactive').addClass('fadeIn');
                     renderContentSlide();

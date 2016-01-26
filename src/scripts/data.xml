@@ -3,29 +3,37 @@
     <slides>
         <slide slidetype="content" title="title of slide">
             <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
-            <synchedcontent>
-                <content time="1000">
-                   <![CDATA[
-                    one Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    ]]>
-                </content>
-                <content time="1000">
-                    <![CDATA[
-                    two Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    ]]>
-                </content>
-                <content time="1000">
-                    <![CDATA[
-                    three Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    ]]>
-                </content>
-            </synchedcontent>
+            <pages>
+                <page>
+                    <content time="1000">
+                       <![CDATA[
+                       page 1, bullet 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                        ]]>
+                    </content>
+                    <content time="1000">
+                        <![CDATA[
+                        page 1, bullet 2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+                        ]]>
+                    </content>
+                    <content time="1000">
+                        <![CDATA[
+                        page 1, bullet 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+                        ]]>
+                    </content>
+                </page>
+                <page>
+                    <content time="1000">
+                        <![CDATA[
+                        page 2, bullet 1... consectetur adipiscing elit, sed do eiusmod 
+                        ]]>
+                    </content>
+                    <content time="1000">
+                        <![CDATA[
+                        page 2, bullet 2... sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                        ]]>
+                    </content>
+                </page>
+            </pages>
         </slide>
         
         <slide slidetype="boolean" title="title of slide" answer="true">

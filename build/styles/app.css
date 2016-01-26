@@ -8,7 +8,7 @@
        url('../fonts/FranklinGothic-Medium.svg#FranklinGothic-Medium') format('svg');
   font-weight: normal;
   font-style: normal;
-}
+} 
 
 @font-face {
   font-family: 'FranklinGothicBook';
@@ -122,7 +122,7 @@ body {
     top: 0px;
     width: 789px;
     left: 30px;
-    height: 230px;
+    height: 335px; /* 230px */
     border-radius: 2px;
     background-color: #ffffff;
     box-shadow: 0px 0px 3px 0.00px rgba(0, 0, 0, 0.2);
@@ -130,6 +130,11 @@ body {
     font-size:21px;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: all 500ms ease;
+    opacity: 0;
+}
+
+#textBox ul li {
     transition: all 500ms ease;
     opacity: 0;
 }

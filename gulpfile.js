@@ -33,8 +33,8 @@ gulp.task('lint', function(){
 gulp.task('minify', function(){
     return gulp.src(['./src/scripts/palcare.js','./src/scripts/palcare.controller.js','./src/scripts/palcare.model.js','./src/scripts/palcare.view.js'])
         .pipe(concat('all.js'))
-        .pipe(gulp.dest('./src/scripts'))
-        .pipe(uglify())
+        /*.pipe(gulp.dest('./src/scripts'))
+        .pipe(uglify())*/
         .pipe(rename('palcare.min.js'))
         .pipe(gulp.dest('./build/scripts'));
 });
@@ -54,9 +54,13 @@ gulp.task('copy-script-libraries', function(){
         .pipe(gulp.dest('build/scripts'));
     var xmllib = gulp.src('src/scripts/xml*.js')
         .pipe(gulp.dest('build/scripts'));
+    return merge(jquery, xmllib);
+});
+
+gulp.task('copy-xml', function(){
     var xml = gulp.src('src/scripts/*.xml')
         .pipe(gulp.dest('build/scripts'));
-    return merge(jquery, xmllib, xml);
+    return merge(xml);
 });
 
 gulp.task('copy-styles', function(){
@@ -96,19 +100,21 @@ gulp.task('reload', function(){
     return gulp.src('./build/*.*')
         .pipe(connect.reload())
         .on('error',function(err){
-            console.log('copy-images error');
+            console.log('##################');
             console.log(err);
         }); 
 });
 
 gulp.task('watch', function () {
-    gulp.watch('./src/scripts/*.js', ['lint','minify']);
-    gulp.watch('./src/styles/*.*', ['copy-styles']);
-    gulp.watch('./src/index.html', ['copy-index']);
-    gulp.watch('./build/*.*', ['reload']);
+    gulp.watch('./src/scripts/*.xml', ['copy-xml','reload']);
+    gulp.watch('./src/templates/*.html', ['copy-templates','reload']);
+    gulp.watch('./src/scripts/*.js', ['lint','minify','reload']);
+    gulp.watch('./src/styles/*.*', ['copy-styles','reload']);
+    gulp.watch('./src/index.html', ['copy-index','reload']);
+    //gulp.watch('./build/*.*', ['reload']);
 });
 
 
 
 // Default Task
-gulp.task('default', ['lint', 'minify', 'copy-fonts','copy-images','copy-styles','copy-index','copy-templates','copy-script-libraries','connect','watch']);
+gulp.task('default', ['lint', 'minify', 'copy-fonts','copy-images','copy-styles','copy-index','copy-templates','copy-script-libraries','copy-xml','connect','watch']);
