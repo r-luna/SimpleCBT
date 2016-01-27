@@ -30,6 +30,17 @@
                     $('#textBox').removeClass('fadeIn');
                     that.timer = window.setTimeout(showSynchedContent,_globalContentFadeInterval);
                 }
+                var RemovePreviousPage = function(el){
+                    var that = this;
+                    this.elm = el;
+                    this.fadeOutElm = function(){
+                        $(that.elm).removeClass('fadeIn');
+                        window.setTimeout(that.removeElm,_globalContentFadeInterval);
+                    };
+                    this.removeElm = function(){
+                        $(that.elm).remove();
+                    };
+                };
                 function showSynchedContent(){
                     var pageLen = that.contentObj.pages.page.length;
                     var contentLen = that.contentObj.pages.page[that.pageIndex].content.length;
@@ -41,12 +52,19 @@
                         that.pageIndex++;
                         that.contentIndex = 0;
                         if (that.pageIndex < pageLen){
-                            showSynchedContent();
+                            // hide the previous bullets
+                            $('#list li').each(function(i){
+                                var obj = $(this);
+                                var temp = new RemovePreviousPage(obj);
+                                temp.fadeOutElm();
+                            });
+                            // pause to allow previous bullet itmes to fade out from the screen
+                            window.setTimeout(showSynchedContent,_globalContentFadeInterval);
                             return;
                         } else {
                             console.log('done, no more pages');
                             return;
-                        }
+                        } 
                     }
                     
                     $('<li>' + slide.toString() + '</li>').appendTo('#list');
@@ -59,9 +77,7 @@
                     if (that.pageIndex === pageLen -1 && that.contentIndex === contentLen){
                        return;
                     }
-                    //that.timer = window.setTimeout(hideSynchedContent,parseInt(slide._time));
                     that.timer = window.setTimeout(showSynchedContent,parseInt(slide._time));
-
                 }
                 function renderContentSlide(){
                     var tpl = palcare.model.getTemplate('content');
