@@ -27,6 +27,7 @@
         palcare.controller.subscribe('mouseup',palcare.controller.doNextSlide,'doNextSlide');
         palcare.controller.subscribe('mouseup',palcare.controller.doPreviousSlide,'doPreviousSlide');
         palcare.controller.subscribe('mouseup',palcare.controller.doQuestionBtn,'doQuestionBtn');
+        palcare.controller.subscribe('mouseup',palcare.controller.doPauseBtn,'doPauseSlide');
         //palcare.controller.subscribe('mousedown',palcare.controller.changeButtonState);
 
         //palcare.controller.subscribe('keydown',palcare.controller.doKeyEvents);

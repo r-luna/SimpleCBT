@@ -49,22 +49,7 @@
                         slide = that.contentObj.pages.page[that.pageIndex].content[that.contentIndex];
                         that.contentIndex++;
                     } else {
-                        that.pageIndex++;
-                        that.contentIndex = 0;
-                        if (that.pageIndex < pageLen){
-                            // hide the previous bullets
-                            $('#list li').each(function(i){
-                                var obj = $(this);
-                                var temp = new RemovePreviousPage(obj);
-                                temp.fadeOutElm();
-                            });
-                            // pause to allow previous bullet itmes to fade out from the screen
-                            window.setTimeout(showSynchedContent,_globalContentFadeInterval);
-                            return;
-                        } else {
-                            console.log('done, no more pages');
-                            return;
-                        } 
+                        turnThePage();
                     }
                     
                     $('<li>' + slide.toString() + '</li>').appendTo('#list');
@@ -79,6 +64,25 @@
                     }
                     that.timer = window.setTimeout(showSynchedContent,parseInt(slide._time));
                 }
+                function turnThePage(){
+                    var pageLen = that.contentObj.pages.page.length;
+                    that.pageIndex++;
+                    that.contentIndex = 0;
+                    if (that.pageIndex < pageLen){
+                        // hide the previous bullets
+                        $('#list li').each(function(i){
+                            var obj = $(this);
+                            var temp = new RemovePreviousPage(obj);
+                            temp.fadeOutElm();
+                        });
+                        // pause to allow previous bullet itmes to fade out from the screen
+                        window.setTimeout(showSynchedContent,_globalContentFadeInterval);
+                        return;
+                    } else {
+                        console.log('done, no more pages');
+                        return;
+                    } 
+                }
                 function renderContentSlide(){
                     var tpl = palcare.model.getTemplate('content');
                     tpl.find('#topHeaderWrapper').html(that.contentObj._title);
@@ -86,11 +90,21 @@
                     palcare.controller.setIsViewRendered(true);
                 }
                 this.pause = function(){
-                    window.clearTimeout(that.timer);
+                    if (that.timer){
+                        window.clearTimeout(that.timer);
+                        that.timer = null;
+                    } else {
+                        that.resume();
+                    }
                 };
                 this.resume = function(){
-                    var slide = that.contentObj.pages.content[that.pageIndex];
-                    that.timer = window.setTimeout(hideSynchedContent,slide._time);
+                    var content = that.contentObj.pages.page[that.pageIndex].content[that.contentIndex];
+                    if (content !== void 0){
+                        that.timer = window.setTimeout(showSynchedContent,content._time);
+                    } else {
+                        turnThePage();
+                    }
+                    
                 };
                 this.unload = function(){
                     window.clearInterval(that.timer);
@@ -201,6 +215,18 @@
             _currentSlideObj.init(slide);
         },_globalContentFadeInterval);
     };
+    
+    /**
+	 * Pass the selected answer to the slide object.
+	 * @method
+	 * @type {Function}
+	 * @name palcare.view.pauseSlide()
+	 * @param {}
+	 * @return {} Returns nothing
+	 */    
+    ns.pauseSlide = function(){
+        _currentSlideObj.pause(); 
+    };
 
     /**
 	 * Pass the selected answer to the slide object.
@@ -211,7 +237,7 @@
 	 * @return {} Returns nothing
 	 */
     ns.sendAnswer = function(e){
-        _currentSlideObj.handleAnswer(e);  
+         
     };
     
     ns.insertModal = function(){

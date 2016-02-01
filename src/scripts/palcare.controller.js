@@ -189,4 +189,16 @@
         palcare.view.sendAnswer(e);
     };
     
+	/**
+	 * Handles the "pause slide" btn.
+	 * @type {Function}
+     * @name palcare.controller.doPauseSlide()
+	 * @param {Object} e - the event object
+	 * @return {} Returns nothing
+	 * @see palcare.init()
+	 */
+    ns.doPauseBtn = function(e){
+        palcare.view.pauseSlide();
+    };
+    
 })(this.palcare.controller = this.palcare.controller  || {}, jQuery);
