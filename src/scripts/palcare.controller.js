@@ -47,11 +47,12 @@
 	 * @return {} Returns nothing
 	 * @see palcare.init()
 	 */
-	ns.subscribe = function(eType,cb){
+	ns.subscribe = function(eType,cb,action){
+        var subscriberObj = {cb:cb,action:action};
 		if (!_subscriptions.hasOwnProperty(eType)){
 			_subscriptions[eType] = [];
 		}
-		_subscriptions[eType].push(cb);
+		_subscriptions[eType].push(subscriberObj);
 	};
 
 	/**
@@ -96,10 +97,11 @@
             e.preventDefault();
             return;
         }
-
 		var cbs = _subscriptions[e.type];
 		for (var i=0;i<cbs.length;i++){
-            cbs[i](e);
+            if ($(e.target).data('action') === cbs[i].action){
+                cbs[i].cb(e);
+            }
 		}
 
 	};
@@ -149,7 +151,7 @@
     ns.doNextSlide = function(e){
         var currentSlide = palcare.model.getCurrentSlide();
         var slidesLen = palcare.model.getData().slides.slide.length;
-		if ($(e.target).data('action') !== 'doNextSlide' || currentSlide + 1 === slidesLen){
+		if (currentSlide + 1 === slidesLen){
             return;
         }
         ns.setIsViewRendered(false);
@@ -167,7 +169,7 @@
 	 */
     ns.doPreviousSlide = function(e){
         var currentSlide = palcare.model.getCurrentSlide();
-		if ($(e.target).data('action') !== 'doPreviousSlide' || currentSlide === 0){
+		if (currentSlide === 0){
             return;
         }
         //ns.setIsViewRendered(false);
@@ -184,9 +186,6 @@
 	 * @see palcare.init()
 	 */
     ns.doQuestionBtn = function(e){
-        if ($(e.target).data('action') !== 'doQuestionBtn'){
-            return;
-        }
         palcare.view.sendAnswer(e);
     };
     
