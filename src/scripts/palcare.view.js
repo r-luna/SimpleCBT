@@ -50,8 +50,9 @@
                         that.contentIndex++;
                     } else {
                         turnThePage();
+                        return;
                     }
-                    
+
                     $('<li>' + slide.toString() + '</li>').appendTo('#list');
                     $('#textBox').addClass('fadeIn');
                     
