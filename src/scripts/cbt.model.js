@@ -1,13 +1,13 @@
 /**
  * @type {Object}
  * @return {} returns nothing
- * @name palcare.model
- * @description Model for the palliative care app.
+ * @name cbt.model
+ * @description Model for the CBT app.
  * @namespace Holds all functionality
  */
 ;(function(ns,$){
     /* js:option explicit*/
-    /* global window, jQuery, palcare */
+    /* global window, jQuery, cbt */
 
     // PRIVATE
     
@@ -31,7 +31,7 @@
 	 * Keeps track of the user's score.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.setScore()
+	 * @name cbt.model.setScore()
 	 * @param {Number} slidendx - the number of the current slide
      * @param {String} answer - the selected answer,values can be boolan or multiplechoice (a, b, c, d)
      * @param {Boolean} iscorrect - is the answer correct
@@ -46,7 +46,7 @@
 	 * Keeps track of the user's score.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.setScore()
+	 * @name cbt.model.setScore()
 	 * @param {Number} slidendx - the number of the current slide
 	 * @return {} Returns nothing
 	 */    
@@ -58,7 +58,7 @@
 	 * Loads the coontent data.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.loadData()
+	 * @name cbt.model.loadData()
 	 * @param {Number} num - the number of the current slide
 	 * @return {} Returns nothing
 	 */
@@ -79,7 +79,7 @@
 	 * Returns the current slide number.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.getCurrentSlide()
+	 * @name cbt.model.getCurrentSlide()
 	 * @param {Number} num - the number of the current slide
 	 * @return {} Returns nothing
 	 */
@@ -91,7 +91,7 @@
 	 * Returns content data.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.getData()
+	 * @name cbt.model.getData()
 	 * @param {Number} num - the number of the current slide
 	 * @return {} Returns nothing
 	 */
@@ -103,7 +103,7 @@
 	 * Sets the current slide number.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.setNextSlide()
+	 * @name cbt.model.setNextSlide()
 	 * @param {} 
 	 * @return {} Returns nothing
 	 */
@@ -115,7 +115,7 @@
 	 * Sets the current slide to the previous number.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.setNextSlide()
+	 * @name cbt.model.setNextSlide()
 	 * @param {} 
 	 * @return {} Returns nothing
 	 */
@@ -127,7 +127,7 @@
 	 * Caches the template files.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.loadTemplates()
+	 * @name cbt.model.loadTemplates()
 	 * @param {}
 	 * @return {} Returns nothing
 	 */
@@ -153,7 +153,7 @@
 	 * Recursive function that checks all properties of the _templates object to ensure that all templates have been loaded
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.loadTemplates()
+	 * @name cbt.model.loadTemplates()
 	 * @param {}
 	 * @return {} Returns nothing
 	 */
@@ -169,17 +169,17 @@
         }
         if (!loaded){
             console.log('loading...');
-            window.setTimeout(palcare.model.checkForCompleteLoad,200);
+            window.setTimeout(cbt.model.checkForCompleteLoad,200);
             return;
         }
-        palcare.view.loadSlide();
+        cbt.view.loadSlide();
     };
 
     /**
 	 * Loads the content for the app.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.setCurrentSlide()
+	 * @name cbt.model.setCurrentSlide()
 	 * @param {Number} num - the number representing the current slide
 	 * @return {} Returns nothing
 	 */
@@ -191,7 +191,7 @@
 	 * Loads the content for the app.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.model.getCurrentSlide()
+	 * @name cbt.model.getCurrentSlide()
 	 * @param {String} str - the string representing the desired template to return.
 	 * @return {} Returns nothing
 	 */
@@ -199,6 +199,6 @@
         return _templates[str];
     };
     
-})(this.palcare.model = this.palcare.model || {},jQuery);
+})(this.cbt.model = this.cbt.model || {},jQuery);
 
 

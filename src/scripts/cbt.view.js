@@ -1,13 +1,13 @@
 /**
  * @type {Object}
  * @return {} returns nothing
- * @name palcare.view
- * @description View for the palliative care app.
+ * @name cbt.view
+ * @description View for the CBT app.
  * @namespace Holds all functionality
  */
 ;(function(ns,$){
     /* js:option explicit*/
-    /* global jQuery, palcare, window */
+    /* global jQuery, cbt, window */
 
     var _currentSlideObj = null;
     var _globalContentFadeInterval = 500; // ms
@@ -21,7 +21,7 @@
                 this.timer = null;
                 this.canFadeContent = true;
                 function subscribeToEvents(){
-                    //palcare.controller.subscribe('mouseup',palcare.controller.doNextSlide);
+                    //cbt.controller.subscribe('mouseup',cbt.controller.doNextSlide);
                 }
                 function unsubscribeToEvents(){
             
@@ -85,10 +85,10 @@
                     } 
                 }
                 function renderContentSlide(){
-                    var tpl = palcare.model.getTemplate('content');
+                    var tpl = cbt.model.getTemplate('content');
                     tpl.find('#topHeaderWrapper').html(that.contentObj._title);
                     $('#interactive').html(tpl.html());
-                    palcare.controller.setIsViewRendered(true);
+                    cbt.controller.setIsViewRendered(true);
                 }
                 this.pause = function(){
                     if (that.timer){
@@ -113,13 +113,13 @@
                 };
                 this.init = function(content){
                     that.contentObj = content; // that.contentObj.pages.page[]
-                    console.log(content);
+                    //console.log(content);
                     var slide = that.contentObj.pages.page[that.pageIndex].content[that.contentIndex];
                     $('#interactive').addClass('fadeIn');
                     renderContentSlide();
                     
                     that.timer = window.setTimeout(showSynchedContent,parseInt(slide._time));
-                    //_subscribeToEvents();
+                    
                 };
             },
             boolean: function(){
@@ -128,14 +128,14 @@
                 this.contentObj = null;
 
                 function renderBooleanSlide(){
-                    var tpl = palcare.model.getTemplate('boolean');
+                    var tpl = cbt.model.getTemplate('boolean');
                     tpl.find('#questionTitle').html(that.contentObj._title);
                     tpl.find('#textBox2').html(that.contentObj.question.toString());
                     tpl.find('#answer0').attr('data-isanswer',(that.contentObj.answer === 'true' ? true : false));
                     tpl.find('#answer1').attr('data-isanswer',(that.contentObj.answer === 'true' ? false : true));
                     $('#interactive').html(tpl.html());
                     $('#interactive').addClass('fadeIn');
-                    palcare.controller.setIsViewRendered(true);
+                    cbt.controller.setIsViewRendered(true);
                 }
                 this.unload = function(){
                     // needs to be here
@@ -146,7 +146,7 @@
                     }
                     var isCorrect = $(e.target).data('isanswer');
                     var answerndx = $(e.target).data('answerndx');
-                    palcare.model.setScore(isCorrect,answerndx);
+                    cbt.model.setScore(isCorrect,answerndx);
                     answered = true;
                 };
                 this.init = function(content){
@@ -160,7 +160,7 @@
                 var answered = false;
                 this.contentObj = null;
                 function renderMultiplechoiceSlide(){
-                    var tpl = palcare.model.getTemplate('multi');
+                    var tpl = cbt.model.getTemplate('multi');
                     var answers = that.contentObj.answers.answer;
                     tpl.find('#questionSubTitle').html(that.contentObj.subtitle);
                     tpl.find('#questionMainTitle').html(that.contentObj._title);
@@ -173,7 +173,7 @@
 
                     $('#interactive').html(tpl.html());
                     $('#interactive').addClass('fadeIn');
-                    palcare.controller.setIsViewRendered(true);
+                    cbt.controller.setIsViewRendered(true);
                 }
                 this.handleAnswer = function(e){
                     if (answered){
@@ -181,7 +181,7 @@
                     }
                     var isCorrect = $(e.target).data('isanswer');
                     var answerndx = $(e.target).data('answerndx');
-                    palcare.model.setScore(isCorrect,answerndx);
+                    cbt.model.setScore(isCorrect,answerndx);
                     answered = true;
                 };
                 this.unload = function(){
@@ -201,12 +201,12 @@
 	 * Loads the content for the app.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.view.loadSlide()
+	 * @name cbt.view.loadSlide()
 	 * @param {}
 	 * @return {} Returns nothing
 	 */
     ns.loadSlide = function(){
-        var slide = palcare.model.getData().slides.slide[palcare.model.getCurrentSlide()];
+        var slide = cbt.model.getData().slides.slide[cbt.model.getCurrentSlide()];
         $('#interactive').removeClass('fadeIn');
         if (_currentSlideObj !== null){
             _currentSlideObj.unload(); 
@@ -221,7 +221,7 @@
 	 * Pass the selected answer to the slide object.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.view.pauseSlide()
+	 * @name cbt.view.pauseSlide()
 	 * @param {}
 	 * @return {} Returns nothing
 	 */    
@@ -233,18 +233,18 @@
 	 * Pass the selected answer to the slide object.
 	 * @method
 	 * @type {Function}
-	 * @name palcare.view.sendAnswer()
+	 * @name cbt.view.sendAnswer()
 	 * @param {}
 	 * @return {} Returns nothing
 	 */
     ns.sendAnswer = function(e){
-         
+         _currentSlideObj.handleAnswer(e);
     };
     
     ns.insertModal = function(){
         
     };
     
-})(this.palcare.view = this.palcare.view || {},jQuery);
+})(this.cbt.view = this.cbt.view || {},jQuery);
 
 

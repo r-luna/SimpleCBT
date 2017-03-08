@@ -1,13 +1,13 @@
 /**
  * @type {Object}
  * @return {} returns nothing
- * @name palcare.controller
+ * @name cbt.controller
  * @description The controller for the application - all events are routed through the controller's publisher which notifies subscribing controller methods
- * @namespace holds the event pub/sub system and button methods of the event in question. See palcare.init() for the event subscriptions and delegated event listeners.
+ * @namespace holds the event pub/sub system and button methods of the event in question. See cbt.init() for the event subscriptions and delegated event listeners.
  */
 ;(function(ns,$){
     /* js:option explicit*/
-    /* global palcare, jQuery */
+    /* global cbt, jQuery */
 
     // PRIVATE
 
@@ -28,11 +28,11 @@
 	/**
 	 * Sets the value for "_isViewRendered - helps prevent click spamming of ui elements when views are being loaded;
 	 * @type {Function}
-     * @name palcare.controller.setIsViewRendered
+     * @name cbt.controller.setIsViewRendered
 	 * @param {String} eType - the event type
 	 * @param {Object} cb - the function reference
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
     ns.setIsViewRendered = function(bool){
         _isViewRendered = bool;   
@@ -41,11 +41,11 @@
 	/**
 	 * This handles the event subscriptions. Subscribers pass the event type and the callback.
 	 * @type {Function}
-     * @name palcare.controller.subscribe
+     * @name cbt.controller.subscribe
 	 * @param {String} eType - the event type
 	 * @param {Object} cb - the function reference
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
 	ns.subscribe = function(eType,cb,action){
         var subscriberObj = {cb:cb,action:action};
@@ -58,11 +58,11 @@
 	/**
 	 * Removes subscribers from the _subscriptions array.
 	 * @type {Function}
-     * @name palcare.controller.unsubscribe
+     * @name cbt.controller.unsubscribe
 	 * @param {String} eType - the event type
 	 * @param {Object} cb - the function reference
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
     ns.unsubscribe = function(){
         console.log('palcar.controller.unsibscrobe');
@@ -73,10 +73,10 @@
 	 * This notifies the event subscribers (hashchange has a separate publisher). When an event fires all subscribers to the event are notified. The subscribers
      * inspect the event target to see if the event is something that they are expected to act upon.
 	 * @type {Function}
-     * @name palcare.controller.notify
+     * @name cbt.controller.notify
 	 * @param {Object} e - the event object
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
 	ns.notify = function(e){
 		if (!$(e.target).data('action')){
@@ -109,10 +109,10 @@
 	/**
 	 * Handles touchstart / mousedown events for btn elements.
 	 * @type {Function}
-     * @name palcare.controller.doChangeButtonState
+     * @name cbt.controller.doChangeButtonState
 	 * @param {Object} e - the event object
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
 	ns.changeButtonState = function(e){
 		if ($(e.type) !== 'touchstart' || $(e.type) !== 'mousedown'){
@@ -121,21 +121,21 @@
 			}
 		}
         if (!$(e.target).hasClass('btn_disabled')){
-            palcare.util.doChangeButtonState(e);
+            cbt.util.doChangeButtonState(e);
         }
 	};
 
 	/**
 	 * Handles touchend / mouseup events for btn elements.
 	 * @type {Function}
-     * @name palcare.controller.revertButtonState
+     * @name cbt.controller.revertButtonState
 	 * @param {Object} e - the event object
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
 	ns.revertButtonState = function(e){
 		if (e.type === 'touchend' || e.type === 'mouseup'){
-            palcare.util.doRevertButtonState(e);
+            cbt.util.doRevertButtonState(e);
 		}
 	};
 
@@ -143,62 +143,62 @@
 	/**
      * Advances the cbt to the next slide
 	 * @type {Function}
-     * @name palcare.controller.doSpecialPartsAccept
+     * @name cbt.controller.doSpecialPartsAccept
 	 * @param {Object} e - the event object
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
     ns.doNextSlide = function(e){
-        var currentSlide = palcare.model.getCurrentSlide();
-        var slidesLen = palcare.model.getData().slides.slide.length;
+        var currentSlide = cbt.model.getCurrentSlide();
+        var slidesLen = cbt.model.getData().slides.slide.length;
 		if (currentSlide + 1 === slidesLen){
             return;
         }
         ns.setIsViewRendered(false);
-        palcare.model.setNextSlide();
-        palcare.view.loadSlide();
+        cbt.model.setNextSlide();
+        cbt.view.loadSlide();
     };
 
 	/**
 	 * Move the cbt back to the previous slide
 	 * @type {Function}
-     * @name palcare.controller.doPreviousSlide
+     * @name cbt.controller.doPreviousSlide
 	 * @param {Object} e - the event object
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
     ns.doPreviousSlide = function(e){
-        var currentSlide = palcare.model.getCurrentSlide();
+        var currentSlide = cbt.model.getCurrentSlide();
 		if (currentSlide === 0){
             return;
         }
         //ns.setIsViewRendered(false);
-        palcare.model.setPreviousSlide();
-        palcare.view.loadSlide();
+        cbt.model.setPreviousSlide();
+        cbt.view.loadSlide();
     };
     
 	/**
 	 * Handles the user's answer by handing the event to the slide object's "answer" method.
 	 * @type {Function}
-     * @name palcare.controller.doQuestionBtn()
+     * @name cbt.controller.doQuestionBtn()
 	 * @param {Object} e - the event object
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
     ns.doQuestionBtn = function(e){
-        palcare.view.sendAnswer(e);
+        cbt.view.sendAnswer(e);
     };
     
 	/**
 	 * Handles the "pause slide" btn.
 	 * @type {Function}
-     * @name palcare.controller.doPauseSlide()
+     * @name cbt.controller.doPauseSlide()
 	 * @param {Object} e - the event object
 	 * @return {} Returns nothing
-	 * @see palcare.init()
+	 * @see cbt.init()
 	 */
     ns.doPauseBtn = function(e){
-        palcare.view.pauseSlide();
+        cbt.view.pauseSlide();
     };
     
-})(this.palcare.controller = this.palcare.controller  || {}, jQuery);
+})(this.cbt.controller = this.cbt.controller  || {}, jQuery);
