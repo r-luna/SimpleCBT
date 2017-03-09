@@ -75,7 +75,6 @@ body {
     text-rendering: optimizeLegibility;
     -ms-touch-action: manipulation; /* prevent 300ms delay on touch start events */
     touch-action: none; 			/* prevent 300ms delay on touch start events */
-    background-color:#ffffff;
     background-attachment:fixed;
     font-family: AudiNormal;
     font-size:13px;
@@ -149,12 +148,13 @@ body {
     left: 331px;
     height: 54px;
     width: 310px;
+	z-index: 101;
 }
 .btn {
     cursor: pointer;
 }
 #leftBtn {
-    background: url(../images/btn_left.png);
+    background: url(../images/btn_left_2.png);
     height: 54px;
     width: 54px;
     position: absolute;
@@ -172,7 +172,7 @@ body {
 }
 
 #rightBtn {
-    background: url(../images/btn_right.png);
+    background: url(../images/btn_right_2.png);
     height: 54px;
     width: 54px;
     position: absolute;
@@ -212,6 +212,21 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#summary {
+    width: 100%;
+    font-family: CalistoMT;
+    font-size:30px;
+    color: #981e32;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#score {
+	font-size: 45px;
+    color: #981e32;
+    text-align: center;
+    overflow: hidden;
+}
 
 .trueBtn {
     position:relative;
@@ -221,8 +236,6 @@ body {
     height: 112px;
     background-color:#ffffff;
     box-shadow: 0px 0px 3px 0.00px rgba(0, 0, 0, 0.2);
-    background: url(../images/btn_true.png);
-    background-repeat: no-repeat;
     cursor: pointer;
 }
 
@@ -234,10 +247,22 @@ body {
     height: 112px;
     background-color:#ffffff;
     box-shadow: 0px 0px 3px 0.00px rgba(0, 0, 0, 0.2);
-    background: url(../images/btn_false.png);
-    background-repeat: no-repeat;
     cursor: pointer;
 }
+
+.trueBtn, .falseBtn {
+	font-size: 45px;
+    text-align: center;
+    padding-top: 32px;
+}
+
+.correct {
+	color: #2fb033;
+}
+.incorrect {
+	color: #b02f2f;
+}
+
 #answerWrapper0 {
     top: -112px;
     left:0px;
@@ -398,8 +423,37 @@ body {
     position: absolute;
     top: 60px;
     left: 85px;
-    background: url(../images/deleteme-IUH-logo.png);
+    background: url(../images/logo.png);
     
+}
+
+#mask {
+	position: absolute;
+	z-index:100;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	background-color: #000000;
+	opacity: 0.3;
+}
+#response {
+	position: absolute;
+    z-index: 101;
+    top: 171px;
+    left: 68px;
+    width: 885px;
+    height: 258px;
+    border: 1px solid #000;
+	background-color: #e4e4e4;
+}
+#responseContent {
+    padding: 32px;
+    font-size: 22px;
+}
+
+.disabled {
+	opacity: 0.3;
 }
 
 .testtext {

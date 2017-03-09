@@ -79,6 +79,9 @@
 	 * @see cbt.init()
 	 */
 	ns.notify = function(e){
+		if ($(e.target).hasClass('disabled')){
+			return;
+		}
 		if (!$(e.target).data('action')){
             // if e.target does not have a data action search through a max of 5 parents to find it
             var obj = e.target;
@@ -152,6 +155,8 @@
         var currentSlide = cbt.model.getCurrentSlide();
         var slidesLen = cbt.model.getData().slides.slide.length;
 		if (currentSlide + 1 === slidesLen){
+			$('#controlsWrapper').hide();
+			cbt.view.doSummary();
             return;
         }
         ns.setIsViewRendered(false);

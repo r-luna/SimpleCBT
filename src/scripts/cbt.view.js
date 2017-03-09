@@ -11,6 +11,7 @@
 
     var _currentSlideObj = null;
     var _globalContentFadeInterval = 500; // ms
+	var _globalPauseToEnableInterval = 1000; //ms
     
     var _classes = {
             content:function(){
@@ -20,12 +21,6 @@
                 this.contentIndex = 0;
                 this.timer = null;
                 this.canFadeContent = true;
-                function subscribeToEvents(){
-                    //cbt.controller.subscribe('mouseup',cbt.controller.doNextSlide);
-                }
-                function unsubscribeToEvents(){
-            
-                }
                 function hideSynchedContent(){
                     $('#textBox').removeClass('fadeIn');
                     that.timer = window.setTimeout(showSynchedContent,_globalContentFadeInterval);
@@ -61,6 +56,9 @@
                     },10);
                     
                     if (that.pageIndex === pageLen -1 && that.contentIndex === contentLen){
+						window.setTimeout(function(){
+							cbt.view.enableControls(true);
+						},_globalPauseToEnableInterval);
                        return;
                     }
                     that.timer = window.setTimeout(showSynchedContent,parseInt(slide._time));
@@ -78,10 +76,6 @@
                         });
                         // pause to allow previous bullet itmes to fade out from the screen
                         window.setTimeout(showSynchedContent,_globalContentFadeInterval);
-                        return;
-                    } else {
-                        console.log('done, no more pages');
-                        return;
                     } 
                 }
                 function renderContentSlide(){
@@ -105,7 +99,6 @@
                     } else {
                         turnThePage();
                     }
-                    
                 };
                 this.unload = function(){
                     window.clearInterval(that.timer);
@@ -144,15 +137,35 @@
                     if (answered){
                         return;
                     }
+					console.log(that.contentObj);
                     var isCorrect = $(e.target).data('isanswer');
                     var answerndx = $(e.target).data('answerndx');
-                    cbt.model.setScore(isCorrect,answerndx);
+                    
+					if (isCorrect){
+						if ($(e.target).hasClass('trueBtn')){
+							$('.trueBtn:first').addClass('correct');
+							$('.falseBtn:first').addClass('disabled');
+						} else {
+							$('.falseBtn:first').addClass('correct');
+							$('.trueBtn:first').addClass('disabled');
+						}
+					} else {
+						if ($(e.target).hasClass('trueBtn')){
+							$('.trueBtn:first').addClass('incorrect');
+							$('.falseBtn:first').addClass('disabled');
+						} else {
+							$('.falseBtn:first').addClass('incorrect');
+							$('.trueBtn:first').addClass('disabled');
+						}
+					}
+					cbt.view.insertResponse(that.contentObj.responses.response[answerndx].responsetext.toString());
                     answered = true;
+					cbt.model.setScore(isCorrect,answerndx);
+					cbt.view.enableControls(true);
                 };
                 this.init = function(content){
                     that.contentObj = content;
                     renderBooleanSlide();
-                    console.log(content);
                 };
             },
             multiplechoice: function(){
@@ -191,6 +204,25 @@
                     that.contentObj = content;
                     renderMultiplechoiceSlide();
                 };
+            },
+            endscreen: function(){
+                var that = this;
+                this.results = null;
+                function renderSlide(){
+                    var tpl = cbt.model.getTemplate('endscreen');
+                    tpl.find('#summary').html('You correctly answered ' + that.results.correct + ' out of ' + that.results.questions + ' questions.');
+					tpl.find('#score').html('Total Score: ' + that.results.score + '%');
+                    $('#interactive').html(tpl.html());
+                    $('#interactive').addClass('fadeIn');
+                    cbt.controller.setIsViewRendered(true);
+                }
+                this.unload = function(){
+                    // needs to be here nonetheless
+                };
+                this.init = function(resultsObject){
+                    that.results = resultsObject;
+                    renderSlide();
+                };
             }
         };
     
@@ -207,6 +239,7 @@
 	 */
     ns.loadSlide = function(){
         var slide = cbt.model.getData().slides.slide[cbt.model.getCurrentSlide()];
+		cbt.view.enableControls(false);
         $('#interactive').removeClass('fadeIn');
         if (_currentSlideObj !== null){
             _currentSlideObj.unload(); 
@@ -218,7 +251,7 @@
     };
     
     /**
-	 * Pass the selected answer to the slide object.
+	 * Pause the slide so the timer doesnt keep running.
 	 * @method
 	 * @type {Function}
 	 * @name cbt.view.pauseSlide()
@@ -226,7 +259,7 @@
 	 * @return {} Returns nothing
 	 */    
     ns.pauseSlide = function(){
-        _currentSlideObj.pause(); 
+        _currentSlideObj.pause();
     };
 
     /**
@@ -238,12 +271,61 @@
 	 * @return {} Returns nothing
 	 */
     ns.sendAnswer = function(e){
-         _currentSlideObj.handleAnswer(e);
+		_currentSlideObj.handleAnswer(e);
     };
     
     ns.insertModal = function(){
         
     };
+	
+    /**
+	 * Load the summary slide and display the results.
+	 * @method
+	 * @type {Function}
+	 * @name cbt.view.doSummary()
+	 * @param {}
+	 * @return {} Returns nothing
+	 */
+	ns.doSummary = function(){
+        $('#interactive').removeClass('fadeIn');
+		
+        if (_currentSlideObj !== null){
+            _currentSlideObj.unload(); 
+        }
+        window.setTimeout(function(){
+            _currentSlideObj = new _classes.endscreen();
+            _currentSlideObj.init(cbt.model.getScore());
+        },_globalContentFadeInterval);
+		
+	};
+	
+    /**
+	 * This method enables or disables the cbt controls.
+	 * @method
+	 * @type {Function}
+	 * @name cbt.view.enableControls()
+	 * @param {Boolean} bool - true or false to enable or disable the cbt controls
+	 * @return {} Returns nothing
+	 */
+	ns.enableControls = function(bool){
+		if (bool){
+			$('#leftBtn').removeClass('disabled');
+			$('#rightBtn').removeClass('disabled');
+			$('#pauseBtn').removeClass('disabled');
+		} else {
+			$('#leftBtn').addClass('disabled');
+			$('#rightBtn').addClass('disabled');
+			$('#pauseBtn').addClass('disabled');
+		}
+	};
+	
+	ns.insertResponse = function(str){
+		var tpl = model.getTemplate('modal');
+		if ($('#mask').length === 0){
+			$('body').append('<div id="mask"></div>');
+			$('body').append('<div id="response"><div id="responseContent">' + str + '</div></div>');
+		}
+	}
     
 })(this.cbt.view = this.cbt.view || {},jQuery);
 

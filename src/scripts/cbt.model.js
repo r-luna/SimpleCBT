@@ -39,9 +39,49 @@
 	 */    
     ns.setScore = function(iscorrect,answerndx){
         _scores['slide' + _currentSlide] = {slidendx: _currentSlide, iscorrect:iscorrect,answerndx:answerndx};
-        console.log(_scores);
+        //console.log(_scores);
     };
     
+    /**
+	 * Returns the current final score.
+	 * @method
+	 * @type {Function}
+	 * @name cbt.model.getScore()
+	 * @return {Number} Returns a number
+	 */    
+    ns.getScore = function(){
+		var totalCorrect = 0;
+		var totalQuestions = 0;
+		var slideType = null;
+		// find total correct
+		var scoreLen = Object.keys(_scores).length;
+
+		for (var i=1;i<scoreLen;i++){
+			console.log(i,_scores['slide'+(i+1)].iscorrect);
+			if (_scores['slide'+(i+1)].iscorrect){
+				totalCorrect++;
+			}
+		}
+		
+		// find total questions... number of answers is technically also the number of questions but lets not rely on that...
+		for (var j=0;j<_data.slides.slide.length;j++){
+			slideType = _data.slides.slide[j]._slidetype;
+			console.log(slideType);
+			if (slideType !== 'content'){
+				totalQuestions++;
+			}
+		}
+		console.log(totalCorrect,totalQuestions);
+		
+		// determine score
+		return {
+			correct: totalCorrect,
+			wrong: (totalQuestions - totalCorrect),
+			questions: totalQuestions,
+			score: Math.floor(totalCorrect / totalQuestions * 100)
+		};
+    };
+	
     /**
 	 * Keeps track of the user's score.
 	 * @method
