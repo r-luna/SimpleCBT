@@ -160,6 +160,7 @@
             return;
         }
         ns.setIsViewRendered(false);
+		cbt.view.removeResponse();
         cbt.model.setNextSlide();
         cbt.view.loadSlide();
     };
@@ -178,6 +179,7 @@
             return;
         }
         //ns.setIsViewRendered(false);
+		cbt.view.removeResponse();
         cbt.model.setPreviousSlide();
         cbt.view.loadSlide();
     };

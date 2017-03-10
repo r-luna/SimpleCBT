@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html><head><title></title>
-    
 <link rel="stylesheet" type="text/css" href="../styles/app.css" />    
 </head><body>
     <div>
         <div id="interactive">
-            <div id="dimmed">x</div>
+            <div id="dimmed"></div>
             <div id="modalWrapper">
                 <div id="modalPassFailBox"></div>
                 <div id="modalContentBox">
-                    <div id="modalAnswer">"I'm so sorry to hear that ...."</div>
+                    <div id="modalAnswer">
+                        <span id="modalCorrect" class="hidden">Correct</span>
+						<span id="modalIncorrect" class="hidden">Incorrect</span>
+					</div>
                     <div id="modalLine"></div>
                     <div id="modalPraise">
-                        <span id="modalCorrect">CORRECT!</span>This answeer shows blah blah blah
+						<span id="modalResponse">more test in here</span>
                     </div>
                 </div>
             </div>

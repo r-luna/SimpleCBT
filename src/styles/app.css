@@ -138,10 +138,6 @@ body {
     opacity: 0;
 }
 
-.fadeIn {
-    opacity: 1 !important;
-}
-
 #controlsWrapper {
     position:absolute;
     top: 624px;
@@ -153,6 +149,7 @@ body {
 .btn {
     cursor: pointer;
 }
+	
 #leftBtn {
     background: url(../images/btn_left_2.png);
     height: 54px;
@@ -352,8 +349,9 @@ body {
     background-color: #000;
     height: 100%;
     width: 100%;
-    opacity: .7;
     z-index: 100;
+    transition: all 500ms ease;
+    opacity: 0;
 }
 
 #modalContentBox {
@@ -372,15 +370,21 @@ body {
     left: 89px;
     width: 784px;
     z-index: 101;
+    transition: all 500ms ease;
+    opacity: 0;
 }
 
 #modalPassFailBox {
     height: 140px;
     width: 140px;
-    background-color: #ccc;
     margin: 0px auto;
-    background: url(../images/icon_correct.png);
     background-position: -14px -11px
+}
+.pass {
+	background: url(../images/icon_correct.png)
+}
+.fail {
+	background: url(../images/icon_incorrect.png)
 }
 
 #modalLine {
@@ -390,10 +394,12 @@ body {
     margin: 0px auto;
 }
 
+
 #modalAnswer {
     font-family: FranklinGothicBook;
     font-size:28.98px;
     margin: 39px 63px 39px 63px;
+	text-align: center;
 }
 
 #modalPraise {
@@ -405,6 +411,12 @@ body {
 
 #modalCorrect {
     color: #94a545;
+}
+#modalIncorrect {
+	color: #981e32;
+}
+#modalWrong {
+    color: #d70000;
     font: 300 28.98px FranklinGothicMedium;
 }
 
@@ -427,33 +439,19 @@ body {
     
 }
 
-#mask {
-	position: absolute;
-	z-index:100;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;
-	background-color: #000000;
-	opacity: 0.3;
-}
-#response {
-	position: absolute;
-    z-index: 101;
-    top: 171px;
-    left: 68px;
-    width: 885px;
-    height: 258px;
-    border: 1px solid #000;
-	background-color: #e4e4e4;
-}
-#responseContent {
-    padding: 32px;
-    font-size: 22px;
-}
-
 .disabled {
 	opacity: 0.3;
+	cursor: default
+}
+.hidden {
+	display: none;
+}
+
+.fadeIn {
+    opacity: 1 !important;
+}
+#dimmed.fadeIn {
+    opacity: .5 !important;
 }
 
 .testtext {

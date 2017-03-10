@@ -117,7 +117,7 @@
             },
             boolean: function(){
                 var that = this;
-                var answered = false;
+                this.answered = false;
                 this.contentObj = null;
 
                 function renderBooleanSlide(){
@@ -134,13 +134,13 @@
                     // needs to be here
                 };
                 this.handleAnswer = function(e){
-                    if (answered){
+                    if (that.answered){
                         return;
                     }
-					console.log(that.contentObj);
                     var isCorrect = $(e.target).data('isanswer');
                     var answerndx = $(e.target).data('answerndx');
-                    
+                    var responseObj = {};
+					
 					if (isCorrect){
 						if ($(e.target).hasClass('trueBtn')){
 							$('.trueBtn:first').addClass('correct');
@@ -158,9 +158,16 @@
 							$('.trueBtn:first').addClass('disabled');
 						}
 					}
-					cbt.view.insertResponse(that.contentObj.responses.response[answerndx].responsetext.toString());
-                    answered = true;
+					// assemble the resonse object so that we can respond appropriately to the user's selection
+					responseObj.responseText = that.contentObj.responses.response[answerndx].responsetext.toString();
+					responseObj.correct = isCorrect;
+					// insert the response modal
+					cbt.view.insertResponse(responseObj);
+					// ensure the user cannot change their answer
+                    that.answered = true;
+					// record the scroe
 					cbt.model.setScore(isCorrect,answerndx);
+					// enable the controls
 					cbt.view.enableControls(true);
                 };
                 this.init = function(content){
@@ -319,14 +326,46 @@
 		}
 	};
 	
-	ns.insertResponse = function(str){
-		var tpl = model.getTemplate('modal');
-		if ($('#mask').length === 0){
-			$('body').append('<div id="mask"></div>');
-			$('body').append('<div id="response"><div id="responseContent">' + str + '</div></div>');
+    /**
+	 * Inserts a modal that contains feedback to the user re the answer that they have selected.
+	 * @method
+	 * @type {Function}
+	 * @name cbt.view.insertResponse()
+	 * @param {Object} o - the response object
+	 * @return {} Returns nothing
+	 */
+	ns.insertResponse = function(o){
+		console.log(o);
+		var tpl = cbt.model.getTemplate('modal');
+		tpl.find('#modalResponse').html(o.responseText);
+		if (o.correct){
+			tpl.find('#modalCorrect').removeClass('hidden');
+			tpl.find('#modalPassFailBox').addClass('pass');
+		} else {
+			tpl.find('#modalIncorrect').removeClass('hidden');
+			tpl.find('#modalPassFailBox').addClass('fail');
+		}
+		tpl.find().html();
+		if ($('#dimmed').length === 0){
+			$('body').append(tpl.html());
+			window.setTimeout(function(){
+				$('#dimmed').addClass('fadeIn');
+			},0);
+			window.setTimeout(function(){
+				$('#modalWrapper').addClass('fadeIn');
+			},300);
 		}
 	}
-    
+	
+	ns.removeResponse = function(){
+		$('#dimmed').removeClass('fadeIn');
+		$('#modalWrapper').removeClass('fadeIn');
+		//window.setTimeout(function(){
+			$('#dimmed').removeClass('fadeIn');
+			$('#modalWrapper').removeClass('fadeIn');
+		//},300);
+	}
+
 })(this.cbt.view = this.cbt.view || {},jQuery);
 
 
