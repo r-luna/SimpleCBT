@@ -38,24 +38,35 @@
                 };
                 function showSynchedContent(){
                     var pageLen = that.contentObj.pages.page.length;
-                    var contentLen = that.contentObj.pages.page[that.pageIndex].content.length;
+                    
+					if (that.contentObj.pages.page.content){
+						var contentLen = that.contentObj.pages.page.content.length;
+					} else {
+						var contentLen = that.contentObj.pages.page[that.pageIndex].content.length;
+					}
+					
                     var slide = null;
+					
                     if (that.contentIndex < contentLen){
-                        slide = that.contentObj.pages.page[that.pageIndex].content[that.contentIndex];
+                        if (that.contentObj.pages.page.content){
+							slide = that.contentObj.pages.page.content[that.contentIndex];
+						} else {
+							slide = that.contentObj.pages.page[that.pageIndex].content[that.contentIndex];
+						}
                         that.contentIndex++;
                     } else {
                         turnThePage();
                         return;
                     }
-
+					
                     $('<li>' + slide.toString() + '</li>').appendTo('#list');
                     $('#textBox').addClass('fadeIn');
                     
                     window.setTimeout(function(){
                         $('#list li').last().addClass('fadeIn'); 
                     },10);
-                    
-                    if (that.pageIndex === pageLen -1 && that.contentIndex === contentLen){
+
+                    if (that.pageIndex === (that.contentObj.pages.page.length - 1) && that.contentIndex === contentLen || that.contentObj.pages.page.content && that.contentIndex === contentLen){
 						window.setTimeout(function(){
 							cbt.view.enableControls(true);
 						},_globalPauseToEnableInterval);
@@ -106,11 +117,13 @@
                 };
                 this.init = function(content){
                     that.contentObj = content; // that.contentObj.pages.page[]
-                    //console.log(content);
-                    var slide = that.contentObj.pages.page[that.pageIndex].content[that.contentIndex];
+					if (that.contentObj.pages.page.content){ // no nested pages so the xml2json parse considers this an object, not an array
+						var slide = that.contentObj.pages.page.content[that.contentIndex];
+					} else {
+						var slide = that.contentObj.pages.page[that.pageIndex].content[that.contentIndex];
+					}
                     $('#interactive').addClass('fadeIn');
                     renderContentSlide();
-                    
                     that.timer = window.setTimeout(showSynchedContent,parseInt(slide._time));
                     
                 };
@@ -204,8 +217,16 @@
                     var answerndx = $(e.target).data('answerndx');
                     cbt.model.setScore(isCorrect,answerndx);
 					
+					for (var i=0;i<that.contentObj.responses.response.length;i++){
+						if (that.contentObj.responses.response[i]._type === 'right' && isCorrect){
+							responseObj.responseText = that.contentObj.responses.response[i]._type;
+						} else if (that.contentObj.responses.response[i]._type === 'wrong' && !isCorrect){
+							responseObj.responseText = that.contentObj.responses.response[i]._type
+						}
+					}
+					
 					// assemble the response object so that we can respond appropriately to the user's selection
-					responseObj.responseText = that.contentObj.responses.response[answerndx].responsetext.toString();
+					//responseObj.responseText = that.contentObj.responses.response[answerndx].responsetext.toString();
 					responseObj.correct = isCorrect;
 					// insert the response modal
 					cbt.view.insertResponse(responseObj);
