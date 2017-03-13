@@ -378,7 +378,8 @@ body {
     height: 140px;
     width: 140px;
     margin: 0px auto;
-    background-position: -14px -11px
+    background-position: -14px -11px;
+	xdisplay: none;
 }
 .pass {
 	background: url(../images/icon_correct.png)

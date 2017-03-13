@@ -97,7 +97,7 @@
                 <response type="wrong">
                     <responsetext>
                         <![CDATA[
-                        That was the wrong answer because of this and that 
+                        Option 1 was the wrong answer because of this and that 
                         ]]>
                     </responsetext>
                     <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
@@ -105,7 +105,23 @@
                 <response type="right">
                     <responsetext>
                         <![CDATA[
-                        Thats correct! 
+                        Option 2 was the wrong answer 
+                        ]]>
+                    </responsetext>
+                    <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
+                </response>
+                <response type="right">
+                    <responsetext>
+                        <![CDATA[
+                        That's correct!
+                        ]]>
+                    </responsetext>
+                    <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
+                </response>
+                <response type="right">
+                    <responsetext>
+                        <![CDATA[
+                        option 4 was the wrong answer 
                         ]]>
                     </responsetext>
                     <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
@@ -171,7 +187,7 @@
                 <response type="wrong">
                     <responsetext>
                         <![CDATA[
-                        That was the wrong answer because of this and that
+                        option 1 is the wrong answer because of this and that
                         ]]>
                     </responsetext>
                     <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
@@ -180,6 +196,22 @@
                     <responsetext>
                         <![CDATA[
                         Thats correct! 
+                        ]]>
+                    </responsetext>
+                    <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
+                </response>
+                <response type="right">
+                    <responsetext>
+                        <![CDATA[
+                        option 3 is the wrong answer 
+                        ]]>
+                    </responsetext>
+                    <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />
+                </response>
+                <response type="right">
+                    <responsetext>
+                        <![CDATA[
+                        option 4 is the wrong answer 
                         ]]>
                     </responsetext>
                     <media type="sound" uri="sound/example.mp4" ie_uri="sound/example.wmv" />

@@ -158,7 +158,7 @@
 							$('.trueBtn:first').addClass('disabled');
 						}
 					}
-					// assemble the resonse object so that we can respond appropriately to the user's selection
+					// assemble the response object so that we can respond appropriately to the user's selection
 					responseObj.responseText = that.contentObj.responses.response[answerndx].responsetext.toString();
 					responseObj.correct = isCorrect;
 					// insert the response modal
@@ -177,9 +177,9 @@
             },
             multiplechoice: function(){
                 var that = this;
-                var answered = false;
+                this.answered = false;
                 this.contentObj = null;
-                function renderMultiplechoiceSlide(){
+                function renderMultiplecCoiceSlide(){
                     var tpl = cbt.model.getTemplate('multi');
                     var answers = that.contentObj.answers.answer;
                     tpl.find('#questionSubTitle').html(that.contentObj.subtitle);
@@ -196,20 +196,32 @@
                     cbt.controller.setIsViewRendered(true);
                 }
                 this.handleAnswer = function(e){
-                    if (answered){
+                    if (that.answered){
                         return;
                     }
+					var responseObj = {};
                     var isCorrect = $(e.target).data('isanswer');
                     var answerndx = $(e.target).data('answerndx');
                     cbt.model.setScore(isCorrect,answerndx);
-                    answered = true;
+					
+					// assemble the response object so that we can respond appropriately to the user's selection
+					responseObj.responseText = that.contentObj.responses.response[answerndx].responsetext.toString();
+					responseObj.correct = isCorrect;
+					// insert the response modal
+					cbt.view.insertResponse(responseObj);
+					// ensure the user cannot change their answer
+                    that.answered = true;
+					// record the scroe
+					cbt.model.setScore(isCorrect,answerndx);
+					// enable the controls
+					cbt.view.enableControls(true);
                 };
                 this.unload = function(){
                     // needs to be here nonetheless
                 };
                 this.init = function(content){
                     that.contentObj = content;
-                    renderMultiplechoiceSlide();
+                    renderMultiplecCoiceSlide();
                 };
             },
             endscreen: function(){
@@ -280,10 +292,6 @@
     ns.sendAnswer = function(e){
 		_currentSlideObj.handleAnswer(e);
     };
-    
-    ns.insertModal = function(){
-        
-    };
 	
     /**
 	 * Load the summary slide and display the results.
@@ -335,14 +343,17 @@
 	 * @return {} Returns nothing
 	 */
 	ns.insertResponse = function(o){
-		console.log(o);
 		var tpl = cbt.model.getTemplate('modal');
 		tpl.find('#modalResponse').html(o.responseText);
 		if (o.correct){
 			tpl.find('#modalCorrect').removeClass('hidden');
+			tpl.find('#modalIncorrect').addClass('hidden');
+			tpl.find('#modalPassFailBox').removeClass('fail');
 			tpl.find('#modalPassFailBox').addClass('pass');
 		} else {
 			tpl.find('#modalIncorrect').removeClass('hidden');
+			tpl.find('#modalCorrect').addClass('hidden');
+			tpl.find('#modalPassFailBox').addClass('pass');
 			tpl.find('#modalPassFailBox').addClass('fail');
 		}
 		tpl.find().html();
@@ -360,10 +371,10 @@
 	ns.removeResponse = function(){
 		$('#dimmed').removeClass('fadeIn');
 		$('#modalWrapper').removeClass('fadeIn');
-		//window.setTimeout(function(){
-			$('#dimmed').removeClass('fadeIn');
-			$('#modalWrapper').removeClass('fadeIn');
-		//},300);
+		setTimeout(function(){
+			$('#dimmed').remove();
+			$('#modalWrapper').remove();
+		},_globalContentFadeInterval);
 	}
 
 })(this.cbt.view = this.cbt.view || {},jQuery);

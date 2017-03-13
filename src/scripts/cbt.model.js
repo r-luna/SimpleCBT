@@ -53,11 +53,11 @@
 		var totalCorrect = 0;
 		var totalQuestions = 0;
 		var slideType = null;
+		var score = 0;
 		// find total correct
 		var scoreLen = Object.keys(_scores).length;
 
 		for (var i=1;i<scoreLen;i++){
-			console.log(i,_scores['slide'+(i+1)].iscorrect);
 			if (_scores['slide'+(i+1)].iscorrect){
 				totalCorrect++;
 			}
@@ -66,19 +66,17 @@
 		// find total questions... number of answers is technically also the number of questions but lets not rely on that...
 		for (var j=0;j<_data.slides.slide.length;j++){
 			slideType = _data.slides.slide[j]._slidetype;
-			console.log(slideType);
 			if (slideType !== 'content'){
 				totalQuestions++;
 			}
 		}
-		console.log(totalCorrect,totalQuestions);
-		
+		score = Math.floor(totalCorrect / totalQuestions * 100);
 		// determine score
 		return {
 			correct: totalCorrect,
 			wrong: (totalQuestions - totalCorrect),
 			questions: totalQuestions,
-			score: Math.floor(totalCorrect / totalQuestions * 100)
+			score: isNaN(score) ? 0 : score
 		};
     };
 	

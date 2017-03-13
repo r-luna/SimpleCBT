@@ -156,7 +156,10 @@
         var slidesLen = cbt.model.getData().slides.slide.length;
 		if (currentSlide + 1 === slidesLen){
 			$('#controlsWrapper').hide();
-			cbt.view.doSummary();
+			cbt.view.removeResponse();
+			setTimeout(function(){
+				cbt.view.doSummary();
+			},500);
             return;
         }
         ns.setIsViewRendered(false);
