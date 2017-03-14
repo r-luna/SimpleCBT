@@ -166,6 +166,7 @@ body {
     position: absolute;
     top: 0px;
     left: 130px;
+	display: none;
 }
 
 #rightBtn {
@@ -356,7 +357,7 @@ body {
 
 #modalContentBox {
     background-color: #ffffff;
-    height: 338px;
+    height: 475px;
     width: 785px;
     font-family: FranklinGothicBook;
     font-size: 26px;
@@ -378,8 +379,9 @@ body {
     height: 140px;
     width: 140px;
     margin: 0px auto;
-    background-position: -14px -11px;
-	xdisplay: none;
+    background-position: 50% 50%;
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 .pass {
 	background: url(../images/icon_correct.png)

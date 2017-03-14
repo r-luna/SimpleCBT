@@ -134,11 +134,11 @@
                 this.contentObj = null;
 
                 function renderBooleanSlide(){
-                    var tpl = cbt.model.getTemplate('boolean');
+                    var tpl = $(cbt.model.getTemplate('boolean')).clone();
                     tpl.find('#questionTitle').html(that.contentObj._title);
                     tpl.find('#textBox2').html(that.contentObj.question.toString());
-                    tpl.find('#answer0').attr('data-isanswer',(that.contentObj.answer === 'true' ? true : false));
-                    tpl.find('#answer1').attr('data-isanswer',(that.contentObj.answer === 'true' ? false : true));
+                    tpl.find('#answer0').attr('data-isanswer',(that.contentObj._answer === 'true' ? true : false));
+                    tpl.find('#answer1').attr('data-isanswer',(that.contentObj._answer === 'true' ? false : true));
                     $('#interactive').html(tpl.html());
                     $('#interactive').addClass('fadeIn');
                     cbt.controller.setIsViewRendered(true);
@@ -193,7 +193,7 @@
                 this.answered = false;
                 this.contentObj = null;
                 function renderMultiplecCoiceSlide(){
-                    var tpl = cbt.model.getTemplate('multi');
+                    var tpl = $(cbt.model.getTemplate('multi')).clone();
                     var answers = that.contentObj.answers.answer;
                     tpl.find('#questionSubTitle').html(that.contentObj.subtitle);
                     tpl.find('#questionMainTitle').html(that.contentObj._title);
@@ -201,7 +201,7 @@
                     for (var i=0;i<answers.length;i++){
                         tpl.find('#answer' + i).html(answers[i].toString());
                         tpl.find('#answerWrapper' + i).attr('data-isanswer',answers[i]._iscorrect); // attr() is necessary
-                        tpl.find('#answerWrapper' + i).attr('data-answerndx',i); // attr() is necessary
+                        tpl.find('#answerWrapper' + i).attr('data-answerndx', (answers[i]._iscorrect ? 1 : 0) ); // attr() is necessary
                     }
 
                     $('#interactive').html(tpl.html());
@@ -217,13 +217,7 @@
                     var answerndx = $(e.target).data('answerndx');
                     cbt.model.setScore(isCorrect,answerndx);
 					
-					for (var i=0;i<that.contentObj.responses.response.length;i++){
-						if (that.contentObj.responses.response[i]._type === 'right' && isCorrect){
-							responseObj.responseText = that.contentObj.responses.response[i]._type;
-						} else if (that.contentObj.responses.response[i]._type === 'wrong' && !isCorrect){
-							responseObj.responseText = that.contentObj.responses.response[i]._type
-						}
-					}
+					responseObj.responseText = that.contentObj.responses.response[answerndx].responsetext.toString();
 					
 					// assemble the response object so that we can respond appropriately to the user's selection
 					//responseObj.responseText = that.contentObj.responses.response[answerndx].responsetext.toString();
