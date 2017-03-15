@@ -10,21 +10,66 @@
     /* global window, jQuery, cbt */
 
     // PRIVATE
-    
+	
     var _currentSlide = 0;
     
+	// cache templates
     var _templates = {
         content:null,
         multi:null,
-        boolean:null,
+        bool:null,
         modal:null,
         endscreen: null
     };
     
     var _data = null;
     
-    var _scores = {};
+    var _scores = [];
     
+	/**
+	 * Saves the app's state to localstorage
+	 * @function
+	 * @type {Function}
+	 * @name cbt.model.saveToClient
+	 * @param {String} str - the quiz ID
+	 * @returns {} returns nothing
+	 */
+	function saveToClient(){
+		// build state object
+		var quizState = {
+			id: _data.app._id,
+			currentSlide: _currentSlide,
+			scores: _scores
+		};
+		// insert
+		if (window.localStorage){
+			localStorage.setItem(_data.app._id,JSON.stringify(quizState));
+		} else {
+			window.alert('Your browser doesn\'t support localstorage');
+		}
+	}
+	
+	/**
+	 * Retrives the app's state from the client
+	 * @function
+	 * @type {Function}
+	 * @name cbt.model.readFromCient
+	 * @param {}
+	 * @returns {Boolean} true/false for success/failure, assume failure to be that the object doesnt exist
+	 */
+	function readFromCient(){
+		// is there a previou state?
+		var state = localStorage.getItem(_data.app._id);
+		if (!!state){
+			_currentSlide = state.currentSlide;
+			_scores = state.scores;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
     // PUBLIC
 
     /**
@@ -33,13 +78,13 @@
 	 * @type {Function}
 	 * @name cbt.model.setScore()
 	 * @param {Number} slidendx - the number of the current slide
-     * @param {String} answer - the selected answer,values can be boolan or multiplechoice (a, b, c, d)
+     * @param {String} answer - the selected answer, values can be boolan or multiplechoice (a, b, c, d)
      * @param {Boolean} iscorrect - is the answer correct
 	 * @return {} Returns nothing
 	 */    
     ns.setScore = function(iscorrect,answerndx){
-        _scores['slide' + _currentSlide] = {slidendx: _currentSlide, iscorrect:iscorrect,answerndx:answerndx};
-        //console.log(_scores);
+        _scores.push({slidendx: _currentSlide, iscorrect:iscorrect, answerndx:answerndx});
+		saveToClient();
     };
     
     /**
@@ -52,14 +97,18 @@
     ns.getScore = function(){
 		var totalCorrect = 0;
 		var totalQuestions = 0;
+		var totalIncorrect = 0;
 		var slideType = null;
 		var score = 0;
-		// find total correct
-		var scoreLen = Object.keys(_scores).length;
-
-		for (var i=1;i<scoreLen;i++){
-			if (_scores['slide'+(i+1)].iscorrect){
+		
+		console.log(_scores);
+		
+		// find total correct & wrong
+		for (var i=0;i<_scores.length;i++){
+			if (_scores[i].iscorrect){
 				totalCorrect++;
+			} else {
+				totalIncorrect++;
 			}
 		}
 		
@@ -70,21 +119,22 @@
 				totalQuestions++;
 			}
 		}
-		score = Math.floor(totalCorrect / totalQuestions * 100);
+		score = Math.floor(totalCorrect / _scores.length * 100);
 		// determine score
 		return {
 			correct: totalCorrect,
-			wrong: (totalQuestions - totalCorrect),
+			wrong: totalIncorrect,
 			questions: totalQuestions,
-			score: isNaN(score) ? 0 : score
+			score: isNaN(score) ? 0 : score,
+			obj: _scores
 		};
     };
 	
     /**
-	 * Keeps track of the user's score.
+	 * Gets the score per the given slide index.
 	 * @method
 	 * @type {Function}
-	 * @name cbt.model.setScore()
+	 * @name cbt.model.getSpecificScore()
 	 * @param {Number} slidendx - the number of the current slide
 	 * @return {} Returns nothing
 	 */    
@@ -180,7 +230,7 @@
             _templates.multi = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
         $.get('./templates/boolean_tpl.html', function(template){
-            _templates.boolean = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
+            _templates.bool = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());
         });
         $.get('./templates/end_screen_tpl.html', function(template){
             _templates.endscreen = $('<div></div>').append($($.parseHTML(template)).find('#interactive').html());

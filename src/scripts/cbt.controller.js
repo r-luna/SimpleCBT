@@ -79,6 +79,7 @@
 	 * @see cbt.init()
 	 */
 	ns.notify = function(e){
+		console.log(e);
 		if ($(e.target).hasClass('disabled')){
 			return;
 		}

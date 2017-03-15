@@ -128,16 +128,22 @@ body {
     padding: 43px 55px 43px 55px;
     font-size:21px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    transition: all 500ms ease;
+    opacity: 0;
+	overflow: auto;
+}
+
+#textBox ul li ,
+#textBox p {
     transition: all 500ms ease;
     opacity: 0;
 }
-
-#textBox ul li {
-    transition: all 500ms ease;
-    opacity: 0;
+#textBox p{
+	margin-bottom: 24px;
 }
-
+ul {
+	margin-left: 34px;
+}
 #controlsWrapper {
     position:absolute;
     top: 624px;

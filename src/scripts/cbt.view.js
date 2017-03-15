@@ -38,14 +38,14 @@
                 };
                 function showSynchedContent(){
                     var pageLen = that.contentObj.pages.page.length;
-                    
+                    var pauseTime = 0; // total pause time per slide
+					var slide = null; // the slide that we are dealing with
+					
 					if (that.contentObj.pages.page.content){
 						var contentLen = that.contentObj.pages.page.content.length;
 					} else {
 						var contentLen = that.contentObj.pages.page[that.pageIndex].content.length;
 					}
-					
-                    var slide = null;
 					
                     if (that.contentIndex < contentLen){
                         if (that.contentObj.pages.page.content){
@@ -59,20 +59,36 @@
                         return;
                     }
 					
-                    $('<li>' + slide.toString() + '</li>').appendTo('#list');
+					// insert content
+					if (slide._type === 'block'){
+						var ps = $('#textBox p').length;
+						$('<p id="p_' + ps + '">' + slide.toString() + '</p>').appendTo('#textBox');
+						new fadeIn().init('#p_' + ps, parseInt(slide._time) );
+						pauseTime = parseInt(slide._time);
+					} else if (slide._type === 'list'){
+						var uls = $('#textBox ul').length; // number of ul's
+						$('<ul id="list_' + uls + '"></ul>').appendTo('#textBox'); // insert a UL into the dom
+						if (!slide.item[0]){ // the UL is inserted, add the list items
+							$('#list_' + uls).append('<li id="item_' + uls + '_0">' + slide.item.toString() + '</li>');
+							new fadeIn().init('#item_' + uls + '_0',parseInt(slide._time) );
+							pauseTime += parseInt(slide._time);
+						} else {
+							for (var j=0;j<slide.item.length;j++){
+								$('#list_' + uls).append('<li id="item_' + uls + '_' + j + '">' + slide.item[j].toString() + '</li>');
+								new fadeIn().init('#item_' + uls + '_' + j,(parseInt(slide.item[j]._time) * (j+1)) );
+								pauseTime += parseInt(slide.item[j]._time);
+							}
+						}
+					}
                     $('#textBox').addClass('fadeIn');
-                    
-                    window.setTimeout(function(){
-                        $('#list li').last().addClass('fadeIn'); 
-                    },10);
-
+					
                     if (that.pageIndex === (that.contentObj.pages.page.length - 1) && that.contentIndex === contentLen || that.contentObj.pages.page.content && that.contentIndex === contentLen){
 						window.setTimeout(function(){
 							cbt.view.enableControls(true);
-						},_globalPauseToEnableInterval);
+						},_globalPauseToEnableInterval + pauseTime);
                        return;
                     }
-                    that.timer = window.setTimeout(showSynchedContent,parseInt(slide._time));
+                    that.timer = window.setTimeout(showSynchedContent,pauseTime);
                 }
                 function turnThePage(){
                     var pageLen = that.contentObj.pages.page.length;
@@ -134,7 +150,7 @@
                 this.contentObj = null;
 
                 function renderBooleanSlide(){
-                    var tpl = $(cbt.model.getTemplate('boolean')).clone();
+                    var tpl = $(cbt.model.getTemplate('bool')).clone();
                     tpl.find('#questionTitle').html(that.contentObj._title);
                     tpl.find('#textBox2').html(that.contentObj.question.toString());
                     tpl.find('#answer0').attr('data-isanswer',(that.contentObj._answer === 'true' ? true : false));
@@ -178,7 +194,7 @@
 					cbt.view.insertResponse(responseObj);
 					// ensure the user cannot change their answer
                     that.answered = true;
-					// record the scroe
+					// record the score
 					cbt.model.setScore(isCorrect,answerndx);
 					// enable the controls
 					cbt.view.enableControls(true);
@@ -215,7 +231,6 @@
 					var responseObj = {};
                     var isCorrect = $(e.target).data('isanswer');
                     var answerndx = $(e.target).data('answerndx');
-                    cbt.model.setScore(isCorrect,answerndx);
 					
 					responseObj.responseText = that.contentObj.responses.response[answerndx].responsetext.toString();
 					
@@ -261,6 +276,15 @@
         };
     
     
+	function fadeIn(){
+		that = this;
+		that.init = function(str,time){
+			window.setTimeout(function(){
+				$(str).addClass('fadeIn');
+			},time);
+		}
+	}
+	
     // PUBLIC
 
     /**
